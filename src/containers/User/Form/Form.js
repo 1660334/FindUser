@@ -55,7 +55,7 @@ export default function FormSearch(props) {
                     }}
                   />
                   <AtomTextField
-                    id="náminh"
+                    id="namsinh"
                     label="Năm sinh"
                     type="text"
                     style={{ margin: 16, width: "300px" }}
