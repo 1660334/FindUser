@@ -14,13 +14,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function FormSearch(props) {
-  console.log(props);
   const { arr, setArr } = props;
   const classes = useStyles();
   const [valueSearch, setValueSearch] = React.useState("");
   const handleSearch = () => {
-    const rowNew = arr.filter((item) => item.name.name === valueSearch);
-    setArr(rowNew);
+    if (valueSearch !== "") {
+      const rowNew = arr.filter((item) => item.name.includes(valueSearch));
+      setArr(rowNew);
+    } else {
+    }
   };
   return (
     <AtomBox>
@@ -47,17 +49,22 @@ export default function FormSearch(props) {
                     }}
                     onChange={(event) => {
                       setValueSearch(event.target.value);
+                      console.log("fullnameinput", event.target.value);
                     }}
                   />
                   <AtomTextField
                     id="date"
                     label="Năm sinh"
                     type="date"
+                    defaultValue=""
                     style={{ margin: 16, width: "300px" }}
                     InputLabelProps={{
                       shrink: true,
                     }}
-                    
+                    onChange={(event) => {
+                      setValueSearch(event.target.value);
+                      console.log("dateinput", event.target.value);
+                    }}
                   />
                 </form>
               </AtomGrid>

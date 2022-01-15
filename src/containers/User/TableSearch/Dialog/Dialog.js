@@ -13,12 +13,18 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   large: {
-    width: theme.spacing(15),
-    height: theme.spacing(15),
-    margin: theme.spacing(5),
+    width: theme.spacing(30),
+    height: theme.spacing(30),
+    margin: theme.spacing(6),
   },
 }));
-export default function TableDialog({ avatar, fullnameDetail, birth }) {
+export default function TableDialog({
+  avatar,
+  fullnameDetail,
+  birth,
+  phone,
+  city,
+}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -55,6 +61,12 @@ export default function TableDialog({ avatar, fullnameDetail, birth }) {
             <AtomTypography>
               <b>Năm sinh:</b> {birth}
             </AtomTypography>
+            <AtomTypography>
+              <b>Số điện thoại:</b> {phone}
+            </AtomTypography>
+            <AtomTypography>
+              <b>Thành Phố:</b> {city}
+            </AtomTypography>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -70,4 +82,6 @@ TableDialog.propsTypes = {
   avatar: PropTypes.string, // đường dẫn avatar
   fullnameDetail: PropTypes.string,
   birth: PropTypes.string,
+  phone: PropTypes.string,
+  city: PropTypes.string,
 };

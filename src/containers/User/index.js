@@ -7,6 +7,7 @@ import UserTableSearch from "./TableSearch/TableSearch";
 
 export default function UserProfile() {
   const [arr, setArr] = React.useState([]);
+
   return (
     <AtomBox pt={6}>
       <Container maxWidth="lg">
