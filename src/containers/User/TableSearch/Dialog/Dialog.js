@@ -67,7 +67,7 @@ export default function TableDialog({ avatar, fullnameDetail, birth }) {
   );
 }
 TableDialog.propsTypes = {
-  avatar: PropTypes.string,
+  avatar: PropTypes.string, // đường dẫn avatar
   fullnameDetail: PropTypes.string,
   birth: PropTypes.string,
 };
