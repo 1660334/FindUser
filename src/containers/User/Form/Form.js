@@ -19,7 +19,10 @@ export default function FormSearch(props) {
   const [valueSearch, setValueSearch] = React.useState("");
   const handleSearch = () => {
     if (valueSearch !== "") {
-      const rowNew = arr.filter((item) => item.name.includes(valueSearch));
+      const rowNew = arr.filter(
+        (item) =>
+          item.name.includes(valueSearch) || item.namsinh === valueSearch
+      );
       setArr(rowNew);
     } else {
     }
@@ -49,21 +52,19 @@ export default function FormSearch(props) {
                     }}
                     onChange={(event) => {
                       setValueSearch(event.target.value);
-                      console.log("fullnameinput", event.target.value);
                     }}
                   />
                   <AtomTextField
-                    id="date"
+                    id="náminh"
                     label="Năm sinh"
-                    type="date"
-                    defaultValue=""
+                    type="text"
                     style={{ margin: 16, width: "300px" }}
+                    placeholder="Nhập năm sinh"
                     InputLabelProps={{
                       shrink: true,
                     }}
                     onChange={(event) => {
                       setValueSearch(event.target.value);
-                      console.log("dateinput", event.target.value);
                     }}
                   />
                 </form>

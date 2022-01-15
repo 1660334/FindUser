@@ -30,7 +30,7 @@ export default function UserTableSearch(props) {
     {
       avatar: <Avatar src={allImage.h3} />,
       name: "Võ Lâm Quỳnh Như",
-      namsinh: "22/06/2000",
+      namsinh: "22/06/2022",
 
       xemchitiet: (
         <AtomButton>
