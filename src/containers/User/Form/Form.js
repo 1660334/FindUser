@@ -7,6 +7,13 @@ import AtomBox from "../../../Atomic/atoms/AtomBox";
 import AtomGrid from "../../../Atomic/atoms/AtomGrid";
 import { Paper } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import formatDns from "date-fns/format";
+import isValidDns from "date-fns/isValid";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,21 +24,32 @@ export default function FormSearch(props) {
   const { arr, setArr } = props;
   const classes = useStyles();
   const [valueSearch, setValueSearch] = React.useState("");
+  const [selectedDate, setSelectedDate] = React.useState(null);
+  const dateResult = formatDns(new Date(selectedDate), "dd/MM/yyyy");
+  const resultValueSearch = valueSearch.toUpperCase();
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
   const handleSearch = () => {
     if (valueSearch !== "") {
-      const rowNew = arr.filter(
-        (item) =>
-          item.name.includes(valueSearch) || item.namsinh === valueSearch
+      const rowNew = arr.filter((item) =>
+        item.name.toUpperCase().includes(resultValueSearch)
       );
       setArr(rowNew);
-    } else {
+    }
+    if (isValidDns(selectedDate)) {
+      const rowNew = arr.filter((item) => item.namsinh === dateResult);
+
+      setArr(rowNew);
     }
   };
   return (
     <AtomBox>
-      <AtomGrid container spacing={5}>
+      <AtomGrid container spacing={2}>
         <AtomGrid item xs={12}>
-          <AtomTypography variant="h4" gutterBottom>
+          <AtomTypography variant="h5" gutterBottom>
             <b>Tìm kiếm người dùng!</b>
           </AtomTypography>
         </AtomGrid>
@@ -54,19 +72,22 @@ export default function FormSearch(props) {
                       setValueSearch(event.target.value);
                     }}
                   />
-                  <AtomTextField
-                    id="namsinh"
-                    label="Năm sinh"
-                    type="text"
-                    style={{ margin: 16, width: "300px" }}
-                    placeholder="Nhập năm sinh"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    onChange={(event) => {
-                      setValueSearch(event.target.value);
-                    }}
-                  />
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                      disableToolbar
+                      variant="inline"
+                      format="dd/MM/yyyy"
+                      margin="normal"
+                      id="date-picker-inline"
+                      label="Chọn năm sinh"
+                      value={selectedDate}
+                      style={{ width: "300px" }}
+                      onChange={handleDateChange}
+                      KeyboardButtonProps={{
+                        "aria-label": "change date",
+                      }}
+                    />
+                  </MuiPickersUtilsProvider>
                 </form>
               </AtomGrid>
               <AtomGrid item>

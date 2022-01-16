@@ -52,7 +52,7 @@ export default function UserTableSearch(props) {
     {
       avatar: <Avatar src={allImage.h1} />,
       name: "Hoàng Võ Kì Lân",
-      namsinh: "22/06/2000",
+      namsinh: "23/06/2022",
 
       xemchitiet: (
         <AtomButton>
@@ -215,7 +215,7 @@ export default function UserTableSearch(props) {
           <Paper elevation={3}>
             <AtomBox px={8}>
               <TableContainer className={classes.root}>
-                <AtomTypography variant="h5" gutterBottom>
+                <AtomTypography variant="h6" gutterBottom>
                   {" "}
                   <b>Table User</b>
                 </AtomTypography>
@@ -236,7 +236,7 @@ export default function UserTableSearch(props) {
                   </TableHead>
                   <TableBody>
                     {arr.map((item) => (
-                      <TableRow>
+                      <TableRow key={item.name}>
                         <TableCell>{item.avatar}</TableCell>
                         <TableCell align="right">{item.name}</TableCell>
                         <TableCell align="right">{item.namsinh}</TableCell>
