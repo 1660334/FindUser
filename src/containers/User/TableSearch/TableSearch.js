@@ -42,7 +42,7 @@ export default function UserTableSearch(props) {
               />
             }
             fullnameDetail="Võ Lâm Quỳnh Như"
-            birth="22/06/2000"
+            birth="22/06/2022"
             phone="0909090909"
             city="Quảng Ngãi"
           />
@@ -63,8 +63,8 @@ export default function UserTableSearch(props) {
                 style={{ width: "100%", height: "100%" }}
               />
             }
-            fullnameDetail="Võ Lâm Quỳnh Như"
-            birth="22/06/2000"
+            fullnameDetail="Hoàng Võ Kì Lân"
+            birth="23/06/2022"
             phone="0909090909"
             city="Quảng Ngãi"
           />

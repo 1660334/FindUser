@@ -63,7 +63,7 @@ export default function FormSearch(props) {
                     id="fullName"
                     label="Họ Tên"
                     type="text"
-                    style={{ margin: 16, width: "300px" }}
+                    style={{ margin: 16, width: "250px" }}
                     placeholder="Nhập họ tên"
                     InputLabelProps={{
                       shrink: true,
@@ -76,12 +76,12 @@ export default function FormSearch(props) {
                     <KeyboardDatePicker
                       disableToolbar
                       variant="inline"
-                      format="dd/MM/yyyy"
                       margin="normal"
                       id="date-picker-inline"
                       label="Chọn năm sinh"
+                      format="dd/MM/yyyy"
                       value={selectedDate}
-                      style={{ width: "300px" }}
+                      style={{ width: "250px", marginLeft: "100px" }}
                       onChange={handleDateChange}
                       KeyboardButtonProps={{
                         "aria-label": "change date",
