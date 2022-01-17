@@ -10,11 +10,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import formatDns from "date-fns/format";
 import isValidDns from "date-fns/isValid";
 import DateFnsUtils from "@date-io/date-fns";
-import {
-  DatePicker,
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,31 +19,37 @@ const useStyles = makeStyles((theme) => ({
   },
   muipicker: {
     marginTop: theme.spacing(0),
+    width: "250px",
+  },
+  buttonstyle: {
+    margin: 16,
+    borderRadius: "20px",
+    textTransform: "none",
   },
 }));
-export default function FormSearch(props) {
-  const { arr, filterArr, setFilterArr } = props;
+export default function Form(props) {
+  const { arr, setFilterArr } = props;
   const classes = useStyles();
   const [valueSearch, setValueSearch] = React.useState("");
   const [selectedDate, setSelectedDate] = React.useState(null);
-  const dateResult = formatDns(new Date(selectedDate), "dd/MM/yyyy");
-  const resultValueSearch = valueSearch.toUpperCase();
+  const dateResult = formatDns(new Date(selectedDate), "yyyy");
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  const handleSearch = () => {
-    if (valueSearch !== "") {
+  const handleSearch = (value) => {
+    console.log("input", value);
+    if (value !== "") {
       const rowNew = arr.filter((item) =>
-        item.name.toUpperCase().includes(resultValueSearch)
+        item.name.toUpperCase().includes(value.toUpperCase())
       );
       setFilterArr(rowNew);
     } else {
       setFilterArr(arr);
     }
     if (isValidDns(selectedDate)) {
-      const rowNew = arr.filter((item) => item.namsinh === dateResult);
+      const rowNew = arr.filter((item) => item.bornyear === dateResult);
 
       setFilterArr(rowNew);
     }
@@ -66,36 +68,37 @@ export default function FormSearch(props) {
             <AtomGrid container>
               <AtomGrid item xs={12} md="true">
                 <form className={classes.root}>
-                  <AtomGrid container justifyContent="space-evenly" spacing={2}>
+                  <AtomGrid container spacing={10}>
                     <AtomGrid item>
                       <AtomTextField
+                        className={classes.muipicker}
                         id="fullName"
                         type="text"
                         label="Nhập họ tên"
-                        style={{
-                          width: "250px",
-                        }}
                         placeholder="Nhập họ tên muốn tìm"
                         InputLabelProps={{
                           shrink: true,
                         }}
                         onChange={(event) => {
-                          setValueSearch(event.target.value);
+                          handleSearch(event.target.value);
                         }}
                       />
                     </AtomGrid>
                     <AtomGrid item>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <DatePicker
-                          className={classes.muipicker}
                           variant="inline"
+                          openTo="year"
                           margin="normal"
                           id="date-picker-inline"
                           label="Chọn năm sinh muốn tìm"
-                          format="dd/MM/yyyy"
-                          style={{ width: "250px" }}
+                          format="yyyy"
+                          views={["year"]}
+                          className={classes.muipicker}
                           value={selectedDate}
-                          onChange={handleDateChange}
+                          onChange={(event) => {
+                            handleDateChange(event.target.value);
+                          }}
                         />
                       </MuiPickersUtilsProvider>
                     </AtomGrid>
@@ -103,23 +106,16 @@ export default function FormSearch(props) {
                 </form>
               </AtomGrid>
               <AtomGrid item xs={12} md="auto">
-                <AtomGrid container justifyContent="center">
-                  <AtomGrid item>
-                    <AtomButton
-                      variant="contained"
-                      style={{
-                        margin: 16,
-                        borderRadius: "20px",
-                      }}
-                      size="large"
-                      color="primary"
-                      startIcon={<SearchIcon />}
-                      onClick={handleSearch}
-                    >
-                      Tìm kiếm
-                    </AtomButton>
-                  </AtomGrid>
-                </AtomGrid>
+                <AtomButton
+                  variant="contained"
+                  className={classes.buttonstyle}
+                  size="large"
+                  color="primary"
+                  startIcon={<SearchIcon />}
+                  onClick={handleSearch}
+                >
+                  Tìm kiếm
+                </AtomButton>
               </AtomGrid>
             </AtomGrid>
           </Paper>

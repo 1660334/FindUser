@@ -20,13 +20,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
   },
 }));
-export default function TableDialog({
-  avatar,
-  fullnameDetail,
-  birth,
-  phone,
-  city,
-}) {
+export default function DialogTable({ avatar, name, birth }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -61,16 +55,10 @@ export default function TableDialog({
           >
             <Avatar className={classes.large}>{avatar}</Avatar>
             <AtomTypography style={{ paddingTop: "30px" }}>
-              <b>Họ và tên:</b> {fullnameDetail}
+              <b>Họ và tên:</b> {name}
             </AtomTypography>
             <AtomTypography>
               <b>Năm sinh:</b> {birth}
-            </AtomTypography>
-            <AtomTypography>
-              <b>Số điện thoại:</b> {phone}
-            </AtomTypography>
-            <AtomTypography>
-              <b>Thành Phố:</b> {city}
             </AtomTypography>
           </DialogContentText>
         </DialogContent>
@@ -83,10 +71,8 @@ export default function TableDialog({
     </AtomBox>
   );
 }
-TableDialog.propsTypes = {
+DialogTable.propsTypes = {
   avatar: PropTypes.string, // đường dẫn avatar
-  fullnameDetail: PropTypes.string,
+  name: PropTypes.string,
   birth: PropTypes.string,
-  phone: PropTypes.string,
-  city: PropTypes.string,
 };
