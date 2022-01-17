@@ -11,6 +11,7 @@ import formatDns from "date-fns/format";
 import isValidDns from "date-fns/isValid";
 import DateFnsUtils from "@date-io/date-fns";
 import {
+  DatePicker,
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
@@ -70,9 +71,9 @@ export default function FormSearch(props) {
                       <AtomTextField
                         id="fullName"
                         type="text"
+                        label="Nhập họ tên"
                         style={{
                           width: "250px",
-                          paddingTop: "15px",
                         }}
                         placeholder="Nhập họ tên muốn tìm"
                         InputLabelProps={{
@@ -85,20 +86,16 @@ export default function FormSearch(props) {
                     </AtomGrid>
                     <AtomGrid item>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
+                        <DatePicker
                           className={classes.muipicker}
-                          disableToolbar
                           variant="inline"
                           margin="normal"
                           id="date-picker-inline"
                           label="Chọn năm sinh muốn tìm"
                           format="dd/MM/yyyy"
+                          style={{ width: "250px" }}
                           value={selectedDate}
-                          style={{ width: "250px", paddingBotton: "10px" }}
                           onChange={handleDateChange}
-                          KeyboardButtonProps={{
-                            "aria-label": "change date",
-                          }}
                         />
                       </MuiPickersUtilsProvider>
                     </AtomGrid>
