@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
   muipicker: {
     marginTop: theme.spacing(0),
-    padding: theme.spacing(0),
   },
 }));
 export default function FormSearch(props) {

@@ -3,7 +3,7 @@ import AtomGrid from "../../Atomic/atoms/AtomGrid";
 import AtomBox from "../../Atomic/atoms/AtomBox";
 import { Container } from "@material-ui/core";
 import UserForm from "./Form/Form";
-import UserTableSearch from "./TableSearch/TableSearch";
+import UserTableSearch from "./Table/Table";
 export default function UserProfile() {
   const [arr, setArr] = React.useState([]);
   const [filterArr, setFilterArr] = React.useState([]);

@@ -15,7 +15,9 @@ const useStyles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(30),
     height: theme.spacing(30),
-    margin: theme.spacing(6),
+  },
+  dialogcontent: {
+    margin: "auto",
   },
 }));
 export default function TableDialog({
@@ -53,9 +55,12 @@ export default function TableDialog({
           {"Thông tin chi tiết"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText
+            id="alert-dialog-description"
+            className={classes.dialogcontent}
+          >
             <Avatar className={classes.large}>{avatar}</Avatar>
-            <AtomTypography>
+            <AtomTypography style={{ paddingTop: "30px" }}>
               <b>Họ và tên:</b> {fullnameDetail}
             </AtomTypography>
             <AtomTypography>
