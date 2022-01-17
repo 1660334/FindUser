@@ -17,11 +17,12 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(0),
+    padding: theme.spacing(0),
   },
 }));
 export default function FormSearch(props) {
-  const { arr, setArr } = props;
+  const { arr, filterArr, setFilterArr } = props;
   const classes = useStyles();
   const [valueSearch, setValueSearch] = React.useState("");
   const [selectedDate, setSelectedDate] = React.useState(null);
@@ -37,12 +38,14 @@ export default function FormSearch(props) {
       const rowNew = arr.filter((item) =>
         item.name.toUpperCase().includes(resultValueSearch)
       );
-      setArr(rowNew);
+      setFilterArr(rowNew);
+    } else {
+      setFilterArr(arr);
     }
     if (isValidDns(selectedDate)) {
       const rowNew = arr.filter((item) => item.namsinh === dateResult);
 
-      setArr(rowNew);
+      setFilterArr(rowNew);
     }
   };
   return (
@@ -56,51 +59,67 @@ export default function FormSearch(props) {
 
         <AtomGrid item xs={12}>
           <Paper elevation={3}>
-            <AtomGrid container justifyContent="space-between">
-              <AtomGrid item>
+            <AtomGrid container>
+              <AtomGrid item xs={8}>
                 <form className={classes.root}>
-                  <AtomTextField
-                    id="fullName"
-                    label="Họ Tên"
-                    type="text"
-                    style={{ margin: 16, width: "250px" }}
-                    placeholder="Nhập họ tên"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    onChange={(event) => {
-                      setValueSearch(event.target.value);
-                    }}
-                  />
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                      disableToolbar
-                      variant="inline"
-                      margin="normal"
-                      id="date-picker-inline"
-                      label="Chọn năm sinh"
-                      format="dd/MM/yyyy"
-                      value={selectedDate}
-                      style={{ width: "250px", marginLeft: "100px" }}
-                      onChange={handleDateChange}
-                      KeyboardButtonProps={{
-                        "aria-label": "change date",
-                      }}
-                    />
-                  </MuiPickersUtilsProvider>
+                  <AtomGrid container justifyContent="space-around">
+                    <AtomGrid item>
+                      <AtomTextField
+                        id="fullName"
+                        type="text"
+                        style={{
+                          margin: 16,
+                          width: "250px",
+                          paddingTop: "15px",
+                        }}
+                        placeholder="Nhập họ tên muốn tìm"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        onChange={(event) => {
+                          setValueSearch(event.target.value);
+                        }}
+                      />
+                    </AtomGrid>
+                    <AtomGrid item>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                          disableToolbar
+                          variant="inline"
+                          margin="normal"
+                          id="date-picker-inline"
+                          label="Chọn năm sinh muốn tìm"
+                          format="dd/MM/yyyy"
+                          value={selectedDate}
+                          style={{ width: "250px" }}
+                          onChange={handleDateChange}
+                          KeyboardButtonProps={{
+                            "aria-label": "change date",
+                          }}
+                        />
+                      </MuiPickersUtilsProvider>
+                    </AtomGrid>
+                  </AtomGrid>
                 </form>
               </AtomGrid>
-              <AtomGrid item>
-                <AtomButton
-                  variant="contained"
-                  style={{ margin: 32, borderRadius: "20px" }}
-                  size="large"
-                  color="primary"
-                  startIcon={<SearchIcon />}
-                  onClick={handleSearch}
-                >
-                  Tìm kiếm
-                </AtomButton>
+              <AtomGrid item xs={4}>
+                <AtomGrid container justifyContent="flex-end">
+                  <AtomGrid item>
+                    <AtomButton
+                      variant="contained"
+                      style={{
+                        margin: 16,
+                        borderRadius: "20px",
+                      }}
+                      size="large"
+                      color="primary"
+                      startIcon={<SearchIcon />}
+                      onClick={handleSearch}
+                    >
+                      Tìm kiếm
+                    </AtomButton>
+                  </AtomGrid>
+                </AtomGrid>
               </AtomGrid>
             </AtomGrid>
           </Paper>

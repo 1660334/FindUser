@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function UserTableSearch(props) {
   const classes = useStyles();
-  const { arr, setArr } = props;
+  const { setArr, filterArr, setFilterArr } = props;
+
   const row = [
     {
       avatar: <Avatar src={allImage.h3} />,
@@ -205,9 +206,12 @@ export default function UserTableSearch(props) {
       ),
     },
   ];
+
   useEffect(() => {
     setArr(row);
+    setFilterArr(row);
   }, []);
+
   return (
     <AtomBox>
       <AtomGrid container>
@@ -235,7 +239,7 @@ export default function UserTableSearch(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {arr.map((item) => (
+                    {filterArr.map((item) => (
                       <TableRow key={item.name}>
                         <TableCell>{item.avatar}</TableCell>
                         <TableCell align="right">{item.name}</TableCell>
