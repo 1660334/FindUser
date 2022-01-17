@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "700px",
   },
   widthAva: {
-    minWidth: "30px",
+    maxWidth: "20px",
   },
   widthName: {
     minWidth: "100px",
@@ -115,36 +115,44 @@ export default function TableListUser(props) {
                 >
                   <TableHead>
                     <TableRow>
-                      <TableCell>Ảnh đại diện</TableCell>
+                      <TableCell className={classes.widthAva}>
+                        Ảnh đại diện
+                      </TableCell>
                       <TableCell>Họ và tên</TableCell>
                       <TableCell>Năm sinh</TableCell>
                       <TableCell align="right">Thông tin chi tiết</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {filterArr.map((user) => (
-                      <TableRow key={user.id}>
-                        <TableCell className={classes.widthAva}>
-                          <Avatar src={user.avatar} />
-                        </TableCell>
-                        <TableCell>{user.name}</TableCell>
-                        <TableCell>{user.bornyear}</TableCell>
-                        <TableCell align="right">
-                          <AtomButton>
-                            <TableDialog
-                              avatar={
-                                <Avatar
-                                  className={classes.avatar}
-                                  src={user.avatar}
-                                />
-                              }
-                              name={user.name}
-                              birth={user.bornyear}
-                            />
-                          </AtomButton>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    {filterArr.length > 0 ? (
+                      filterArr.map((user) => (
+                        <TableRow key={user.id}>
+                          <TableCell className={classes.widthAva}>
+                            <Avatar src={user.avatar} />
+                          </TableCell>
+                          <TableCell>{user.name}</TableCell>
+                          <TableCell>{user.bornyear}</TableCell>
+                          <TableCell align="right">
+                            <AtomButton>
+                              <TableDialog
+                                avatar={
+                                  <Avatar
+                                    className={classes.avatar}
+                                    src={user.avatar}
+                                  />
+                                }
+                                name={user.name}
+                                birth={user.bornyear}
+                              />
+                            </AtomButton>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <AtomTypography align="right">
+                        Không tìm thấy dữ liệu cần tìm
+                      </AtomTypography>
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>

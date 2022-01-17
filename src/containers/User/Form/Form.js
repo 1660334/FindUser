@@ -11,7 +11,6 @@ import formatDns from "date-fns/format";
 import isValidDns from "date-fns/isValid";
 import DateFnsUtils from "@date-io/date-fns";
 import {
-  DatePicker,
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
@@ -59,6 +58,7 @@ export default function Form(props) {
       const rowNew = arr.filter((item) =>
         item.name.toUpperCase().includes(value.toUpperCase())
       );
+
       setFilterArr(rowNew);
     } else {
       setFilterArr(arr);
@@ -103,22 +103,11 @@ export default function Form(props) {
                           openTo="year"
                           value={selectedDate}
                           views={["year"]}
+                          format="yyyy"
                           onChange={(data) => {
                             handleDateChange(data);
                           }}
-                          format="yyyy"
                         />
-                        {/* <DatePicker
-                          label="Basic example"
-                          views={["year"]}
-                          value={selectedDate}
-                          variant="inline"
-                          format="yyyy"
-                          className={classes.muipicker}
-                          onChange={(data) => {
-                            handleDateChange(data);
-                          }}
-                        /> */}
                       </MuiPickersUtilsProvider>
                     </AtomGrid>
                   </AtomGrid>
