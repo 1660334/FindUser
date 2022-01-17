@@ -17,7 +17,11 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(0),
+    margin: theme.spacing(1),
+    padding: theme.spacing(0),
+  },
+  muipicker: {
+    marginTop: theme.spacing(0),
     padding: theme.spacing(0),
   },
 }));
@@ -50,7 +54,7 @@ export default function FormSearch(props) {
   };
   return (
     <AtomBox>
-      <AtomGrid container spacing={2}>
+      <AtomGrid container>
         <AtomGrid item xs={12}>
           <AtomTypography variant="h5" gutterBottom>
             <b>Tìm kiếm người dùng!</b>
@@ -60,15 +64,14 @@ export default function FormSearch(props) {
         <AtomGrid item xs={12}>
           <Paper elevation={3}>
             <AtomGrid container>
-              <AtomGrid item xs={8}>
+              <AtomGrid item xs={12} md="true">
                 <form className={classes.root}>
-                  <AtomGrid container justifyContent="space-around">
+                  <AtomGrid container justifyContent="space-around" spacing={2}>
                     <AtomGrid item>
                       <AtomTextField
                         id="fullName"
                         type="text"
                         style={{
-                          margin: 16,
                           width: "250px",
                           paddingTop: "15px",
                         }}
@@ -84,6 +87,7 @@ export default function FormSearch(props) {
                     <AtomGrid item>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
+                          className={classes.muipicker}
                           disableToolbar
                           variant="inline"
                           margin="normal"
@@ -91,7 +95,7 @@ export default function FormSearch(props) {
                           label="Chọn năm sinh muốn tìm"
                           format="dd/MM/yyyy"
                           value={selectedDate}
-                          style={{ width: "250px" }}
+                          style={{ width: "250px", paddingBotton: "10px" }}
                           onChange={handleDateChange}
                           KeyboardButtonProps={{
                             "aria-label": "change date",
@@ -102,8 +106,8 @@ export default function FormSearch(props) {
                   </AtomGrid>
                 </form>
               </AtomGrid>
-              <AtomGrid item xs={4}>
-                <AtomGrid container justifyContent="flex-end">
+              <AtomGrid item xs={12} md="auto">
+                <AtomGrid container justifyContent="center">
                   <AtomGrid item>
                     <AtomButton
                       variant="contained"
