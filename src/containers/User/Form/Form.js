@@ -65,7 +65,7 @@ export default function FormSearch(props) {
             <AtomGrid container>
               <AtomGrid item xs={12} md="true">
                 <form className={classes.root}>
-                  <AtomGrid container justifyContent="space-around" spacing={2}>
+                  <AtomGrid container justifyContent="space-evenly" spacing={2}>
                     <AtomGrid item>
                       <AtomTextField
                         id="fullName"
