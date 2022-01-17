@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core";
 import AtomTypography from "../../../Atomic/atoms/AtomTypography";
 import AtomTextField from "../../../Atomic/atoms/AtomTextField";
@@ -10,7 +10,11 @@ import SearchIcon from "@material-ui/icons/Search";
 import formatDns from "date-fns/format";
 import isValidDns from "date-fns/isValid";
 import DateFnsUtils from "@date-io/date-fns";
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import {
+  DatePicker,
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   muipicker: {
     marginTop: theme.spacing(0),
     width: "250px",
+    marginRight: theme.spacing(4),
   },
   buttonstyle: {
     margin: 16,
@@ -30,12 +35,22 @@ const useStyles = makeStyles((theme) => ({
 export default function Form(props) {
   const { arr, setFilterArr } = props;
   const classes = useStyles();
-  const [valueSearch, setValueSearch] = React.useState("");
-  const [selectedDate, setSelectedDate] = React.useState(null);
-  const dateResult = formatDns(new Date(selectedDate), "yyyy");
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const [selectedDate, setSelectedDate] = React.useState(null);
+
+  const handleDateChange = (data) => {
+    console.log("input", data);
+
+    if (isValidDns(data)) {
+      const rowNew = arr.filter(
+        (item) => item.bornyear === formatDns(new Date(data), "yyyy")
+      );
+
+      setFilterArr(rowNew);
+      setSelectedDate(data);
+    } else {
+      setFilterArr(arr);
+    }
   };
 
   const handleSearch = (value) => {
@@ -47,11 +62,6 @@ export default function Form(props) {
       setFilterArr(rowNew);
     } else {
       setFilterArr(arr);
-    }
-    if (isValidDns(selectedDate)) {
-      const rowNew = arr.filter((item) => item.bornyear === dateResult);
-
-      setFilterArr(rowNew);
     }
   };
   return (
@@ -68,7 +78,7 @@ export default function Form(props) {
             <AtomGrid container>
               <AtomGrid item xs={12} md="true">
                 <form className={classes.root}>
-                  <AtomGrid container spacing={10}>
+                  <AtomGrid container>
                     <AtomGrid item>
                       <AtomTextField
                         className={classes.muipicker}
@@ -86,20 +96,29 @@ export default function Form(props) {
                     </AtomGrid>
                     <AtomGrid item>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <DatePicker
-                          variant="inline"
-                          openTo="year"
-                          margin="normal"
-                          id="date-picker-inline"
-                          label="Chọn năm sinh muốn tìm"
-                          format="yyyy"
-                          views={["year"]}
+                        <KeyboardDatePicker
+                          clearable
                           className={classes.muipicker}
+                          label="Nhập hoặc chọn năm sinh"
+                          openTo="year"
                           value={selectedDate}
-                          onChange={(event) => {
-                            handleDateChange(event.target.value);
+                          views={["year"]}
+                          onChange={(data) => {
+                            handleDateChange(data);
                           }}
+                          format="yyyy"
                         />
+                        {/* <DatePicker
+                          label="Basic example"
+                          views={["year"]}
+                          value={selectedDate}
+                          variant="inline"
+                          format="yyyy"
+                          className={classes.muipicker}
+                          onChange={(data) => {
+                            handleDateChange(data);
+                          }}
+                        /> */}
                       </MuiPickersUtilsProvider>
                     </AtomGrid>
                   </AtomGrid>
