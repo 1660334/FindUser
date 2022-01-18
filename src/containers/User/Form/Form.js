@@ -17,7 +17,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(2),
     padding: theme.spacing(0),
   },
   muipicker: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(4),
   },
   buttonstyle: {
-    margin: 16,
+    margin: theme.spacing(2),
     borderRadius: "20px",
     textTransform: "none",
   },
@@ -66,7 +66,7 @@ export default function Form(props) {
   };
   return (
     <AtomBox>
-      <AtomGrid container>
+      <AtomGrid container spacing={1}>
         <AtomGrid item xs={12}>
           <AtomTypography variant="h5" gutterBottom>
             <b>Tìm kiếm người dùng!</b>
@@ -78,7 +78,7 @@ export default function Form(props) {
             <AtomGrid container>
               <AtomGrid item xs={12} md="true">
                 <form className={classes.root}>
-                  <AtomGrid container>
+                  <AtomGrid container spacing={2}>
                     <AtomGrid item>
                       <AtomTextField
                         className={classes.muipicker}

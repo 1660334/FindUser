@@ -149,9 +149,11 @@ export default function TableListUser(props) {
                         </TableRow>
                       ))
                     ) : (
-                      <AtomTypography align="right">
-                        Không tìm thấy dữ liệu cần tìm
-                      </AtomTypography>
+                      <AtomBox py={2}>
+                        <AtomTypography variant="body1" gutterBottom>
+                          Không tìm thấy dữ liệu tìm kiếm
+                        </AtomTypography>
+                      </AtomBox>
                     )}
                   </TableBody>
                 </Table>
