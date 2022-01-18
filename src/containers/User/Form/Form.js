@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core";
 import AtomTypography from "../../../Atomic/atoms/AtomTypography";
 import AtomTextField from "../../../Atomic/atoms/AtomTextField";
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(4),
   },
   buttonstyle: {
-    margin: theme.spacing(2),
+    margin: theme.spacing(1),
     borderRadius: "20px",
     textTransform: "none",
   },
@@ -38,8 +38,6 @@ export default function Form(props) {
   const [selectedDate, setSelectedDate] = React.useState(null);
 
   const handleDateChange = (data) => {
-    console.log("input", data);
-
     if (isValidDns(data)) {
       const rowNew = arr.filter(
         (item) => item.bornyear === formatDns(new Date(data), "yyyy")
@@ -53,10 +51,15 @@ export default function Form(props) {
   };
 
   const handleSearch = (value) => {
-    console.log("input", value);
     if (value !== "") {
       const rowNew = arr.filter((item) =>
-        item.name.toUpperCase().includes(value.toUpperCase())
+        item.name
+          .toUpperCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/đ/g, "d")
+          .replace(/Đ/g, "D")
+          .includes(value.toUpperCase())
       );
 
       setFilterArr(rowNew);
@@ -76,7 +79,7 @@ export default function Form(props) {
         <AtomGrid item xs={12}>
           <Paper elevation={3}>
             <AtomGrid container>
-              <AtomGrid item xs={12} md="true">
+              <AtomGrid item xs={12}>
                 <form className={classes.root}>
                   <AtomGrid container spacing={2}>
                     <AtomGrid item>
@@ -110,20 +113,20 @@ export default function Form(props) {
                         />
                       </MuiPickersUtilsProvider>
                     </AtomGrid>
+                    <AtomGrid item>
+                      <AtomButton
+                        variant="contained"
+                        className={classes.buttonstyle}
+                        size="large"
+                        color="primary"
+                        startIcon={<SearchIcon />}
+                        onClick={handleSearch}
+                      >
+                        Tìm kiếm
+                      </AtomButton>
+                    </AtomGrid>
                   </AtomGrid>
                 </form>
-              </AtomGrid>
-              <AtomGrid item xs={12} md="auto">
-                <AtomButton
-                  variant="contained"
-                  className={classes.buttonstyle}
-                  size="large"
-                  color="primary"
-                  startIcon={<SearchIcon />}
-                  onClick={handleSearch}
-                >
-                  Tìm kiếm
-                </AtomButton>
               </AtomGrid>
             </AtomGrid>
           </Paper>

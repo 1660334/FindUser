@@ -6,7 +6,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import AtomBox from "../../../../Atomic/atoms/AtomBox";
 import AtomTypography from "../../../../Atomic/atoms/AtomTypography";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core";
@@ -19,56 +18,44 @@ const useStyles = makeStyles((theme) => ({
   dialogcontent: {
     margin: "auto",
   },
+  typography: {
+    paddingTop: "30px",
+  },
 }));
-export default function DialogTable({ avatar, name, birth }) {
+
+export default function DialogTable({ data, open, setOpen }) {
+  //truyền các props sang cho component Table
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
   return (
-    <AtomBox>
-      <AtomButton
-        size="small"
-        color="primary"
-        style={{ textTransform: "none" }}
-        onClick={handleClickOpen}
-      >
-        Xem chi tiết
-      </AtomButton>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title" align="center">
-          {"Thông tin chi tiết"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText
-            id="alert-dialog-description"
-            className={classes.dialogcontent}
-          >
-            <Avatar className={classes.large}>{avatar}</Avatar>
-            <AtomTypography style={{ paddingTop: "30px" }}>
-              <b>Họ và tên:</b> {name}
-            </AtomTypography>
-            <AtomTypography>
-              <b>Năm sinh:</b> {birth}
-            </AtomTypography>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <AtomButton onClick={handleClose} color="primary">
-            Close
-          </AtomButton>
-        </DialogActions>
-      </Dialog>
-    </AtomBox>
+    <Dialog
+      open={open}
+      onClose={() => setOpen(!open)}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title" align="center">
+        {"Thông tin chi tiết"}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText
+          id="alert-dialog-description"
+          className={classes.dialogcontent}
+        >
+          <Avatar className={classes.large} src={data.avatar} />
+          <AtomTypography className={classes.typography}>
+            <b>Họ và tên:</b> {data.name}
+          </AtomTypography>
+          <AtomTypography>
+            <b>Năm sinh:</b> {data.bornyear}
+          </AtomTypography>
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <AtomButton onClick={() => setOpen(!open)} color="primary">
+          Close
+        </AtomButton>
+      </DialogActions>
+    </Dialog>
   );
 }
 DialogTable.propsTypes = {

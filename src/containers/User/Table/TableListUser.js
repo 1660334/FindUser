@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import AtomTypography from "../../../Atomic/atoms/AtomTypography";
 import AtomButton from "../../../Atomic/atoms/AtomButton";
@@ -19,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: theme.spacing(2),
   },
-  button: {
-    textTransform: "none",
-  },
   avatar: {
     height: "100%",
     width: "100%",
@@ -29,11 +26,17 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: "700px",
   },
-  widthAva: {
-    maxWidth: "20px",
+  widthTableCellname: {
+    maxWidth: "100px",
   },
-  widthName: {
-    minWidth: "100px",
+  button: {
+    textTransform: "none",
+  },
+  marginAvt: {
+    marginLeft: theme.spacing(2),
+  },
+  widthTableCell: {
+    maxWidth: "10px",
   },
 }));
 export default function TableListUser(props) {
@@ -96,13 +99,23 @@ export default function TableListUser(props) {
     setArr(userData);
     setFilterArr(userData);
   }, []);
+  //tạo 1 state để mở và đóng dialog
+  const [open, setOpen] = React.useState(false);
+
+  const [dataDialog, setDataDialog] = useState({}); //tạo 1 biến để gan dữ liệu của row khi rander ra
+
+  const handleGetData = (data) => {
+    //đây là hàm khi click vào button thì sẻ mở dialog lên , trong hàm thì ta truyền data vào khi dialog dc mở lên
+    setDataDialog(data);
+    setOpen(true);
+  };
 
   return (
     <AtomBox>
       <AtomGrid container>
         <AtomGrid item xs={12}>
           <Paper elevation={3}>
-            <AtomBox px={8}>
+            <AtomBox>
               <TableContainer className={classes.root}>
                 <AtomTypography variant="h6" gutterBottom>
                   {" "}
@@ -115,35 +128,48 @@ export default function TableListUser(props) {
                 >
                   <TableHead>
                     <TableRow>
-                      <TableCell className={classes.widthAva}>
+                      <TableCell className={classes.widthTableCell}>
                         Ảnh đại diện
                       </TableCell>
-                      <TableCell>Họ và tên</TableCell>
-                      <TableCell>Năm sinh</TableCell>
-                      <TableCell align="right">Thông tin chi tiết</TableCell>
+                      <TableCell className={classes.widthTableCellname}>
+                        Họ và tên
+                      </TableCell>
+                      <TableCell
+                        className={classes.widthTableCell}
+                        align="center"
+                      >
+                        Năm sinh
+                      </TableCell>
+                      <TableCell>Thông tin chi tiết</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {filterArr.length > 0 ? (
                       filterArr.map((user) => (
                         <TableRow key={user.id}>
-                          <TableCell className={classes.widthAva}>
-                            <Avatar src={user.avatar} />
+                          <TableCell className={classes.widthTableCell}>
+                            <Avatar
+                              className={classes.marginAvt}
+                              src={user.avatar}
+                            />
                           </TableCell>
-                          <TableCell>{user.name}</TableCell>
-                          <TableCell>{user.bornyear}</TableCell>
-                          <TableCell align="right">
-                            <AtomButton>
-                              <TableDialog
-                                avatar={
-                                  <Avatar
-                                    className={classes.avatar}
-                                    src={user.avatar}
-                                  />
-                                }
-                                name={user.name}
-                                birth={user.bornyear}
-                              />
+                          <TableCell className={classes.widthTableCellname}>
+                            {user.name}
+                          </TableCell>
+                          <TableCell
+                            className={classes.widthTableCell}
+                            align="center"
+                          >
+                            {user.bornyear}
+                          </TableCell>
+                          <TableCell>
+                            <AtomButton
+                              className={classes.button}
+                              size="small"
+                              color="primary"
+                              onClick={() => handleGetData(user)}
+                            >
+                              Xem chi tiết
                             </AtomButton>
                           </TableCell>
                         </TableRow>
@@ -162,6 +188,8 @@ export default function TableListUser(props) {
           </Paper>
         </AtomGrid>
       </AtomGrid>
+      {/* //chỉ khi nào open bằng true mới mở dialog và truyền data từ mảng vào cho props data bên component TableDialog */}
+      {open && <TableDialog data={dataDialog} setOpen={setOpen} open={open} />}
     </AtomBox>
   );
 }
