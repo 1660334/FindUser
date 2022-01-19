@@ -14,6 +14,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Avatar from "@material-ui/core/Avatar";
 import { allImage } from "./Avatar/Avatar";
 import TableDialog from "./Dialog/DialogTable";
+import { useUniqueId } from "../../helpers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,59 +37,62 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
   },
   widthTableCell: {
-    maxWidth: "10px",
+    width: 80,
+  },
+  widthId: {
+    width: 10,
   },
 }));
 export default function TableListUser(props) {
   const classes = useStyles();
-  const { setArr, filterArr, setFilterArr } = props;
+  const { setArr, arr, filterArr, setFilterArr } = props;
 
   const userData = [
     {
-      id: 1,
+      id: useUniqueId(),
       avatar: allImage.h1,
       name: "Võ Lâm Quỳnh Như",
       bornyear: "2022",
     },
     {
-      id: 2,
+      id: useUniqueId(),
       avatar: allImage.h2,
       name: "Hoàng Võ Kì Lân",
       bornyear: "1990",
     },
 
     {
-      id: 3,
+      id: useUniqueId(),
       avatar: allImage.h3,
       name: "Huỳnh Quốc Luân",
       bornyear: "1996",
     },
     {
-      id: 4,
+      id: useUniqueId(),
       avatar: allImage.h4,
       name: "Võ Thị Thu Diễm",
       bornyear: "1996",
     },
     {
-      id: 5,
+      id: useUniqueId(),
       avatar: allImage.h5,
       name: "Huỳnh Thị Đào",
       bornyear: "1994",
     },
     {
-      id: 6,
+      id: useUniqueId(),
       avatar: allImage.h6,
       name: "Lê Đông Quốc",
       bornyear: "1998",
     },
     {
-      id: 7,
+      id: useUniqueId(),
       avatar: allImage.h2,
       name: "Trần Lê Anh Thư",
       bornyear: "2001",
     },
     {
-      id: 8,
+      id: useUniqueId(),
       avatar: allImage.h7,
       name: "Nguyễn Thị Cẩm Hồng",
       bornyear: "2002",
@@ -128,6 +132,7 @@ export default function TableListUser(props) {
                 >
                   <TableHead>
                     <TableRow>
+                      <TableCell className={classes.widthId}>ID</TableCell>
                       <TableCell className={classes.widthTableCell}>
                         Ảnh đại diện
                       </TableCell>
@@ -146,7 +151,10 @@ export default function TableListUser(props) {
                   <TableBody>
                     {filterArr.length > 0 ? (
                       filterArr.map((user) => (
-                        <TableRow key={user.id}>
+                        <TableRow>
+                          <TableCell className={classes.widthId}>
+                            {user.id}
+                          </TableCell>
                           <TableCell className={classes.widthTableCell}>
                             <Avatar
                               className={classes.marginAvt}
@@ -175,11 +183,7 @@ export default function TableListUser(props) {
                         </TableRow>
                       ))
                     ) : (
-                      <AtomBox py={2}>
-                        <AtomTypography variant="body1" gutterBottom>
-                          Không tìm thấy dữ liệu tìm kiếm
-                        </AtomTypography>
-                      </AtomBox>
+                      <></>
                     )}
                   </TableBody>
                 </Table>
