@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import AtomTypography from "../../../Atomic/atoms/AtomTypography";
 import AtomTextField from "../../../Atomic/atoms/AtomTextField";
-import AtomButton from "../../../Atomic/atoms/AtomButton";
+// import AtomButton from "../../../Atomic/atoms/AtomButton";
 import AtomBox from "../../../Atomic/atoms/AtomBox";
 import AtomGrid from "../../../Atomic/atoms/AtomGrid";
 import { Paper } from "@material-ui/core";
 import DialogAddUser from "../Table/Dialog/DialogAddUser";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 // import SearchIcon from "@material-ui/icons/Search";
 // import formatDns from "date-fns/format";
 // import isValidDns from "date-fns/isValid";
@@ -34,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Form(props) {
   const { arr, setArr, setFilterArr } = props;
+  const [searchYear, setSearchYear] = useState();
   const classes = useStyles();
-
   // const [selectedDate, setSelectedDate] = React.useState(null);
 
   // const handleDateChange = (data) => {
@@ -50,7 +53,10 @@ export default function Form(props) {
   //   setFilterArr(arr);
   // }
   // };
-
+  const handleSelectYear = (event) => {
+    setSearchYear(event.target.value);
+    console.log("value", event.target.value);
+  };
   const handleSearch = (value) => {
     if (value !== "") {
       const rowNew = arr.filter(
@@ -78,6 +84,7 @@ export default function Form(props) {
       setFilterArr(arr);
     }
   };
+
   return (
     <AtomBox>
       <AtomGrid container spacing={1}>
@@ -88,12 +95,12 @@ export default function Form(props) {
         </AtomGrid>
 
         <AtomGrid item xs={12}>
-          <Paper elevation={3}>
+          <Paper elevation={1}>
             <AtomGrid container>
               <AtomGrid item xs={12}>
                 <form className={classes.root}>
                   <AtomGrid container spacing={2}>
-                    <AtomGrid item xs={10}>
+                    <AtomGrid item xs={9}>
                       <AtomTextField
                         fullWidth
                         className={classes.muipicker}
@@ -108,6 +115,20 @@ export default function Form(props) {
                           handleSearch(event.target.value);
                         }}
                       />
+                    </AtomGrid>
+                    <AtomGrid item xs={1}>
+                      <FormControl fullWidth>
+                        <Select variant="outlined" onChange={handleSelectYear}>
+                          <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem>
+                          <MenuItem value={1}>big</MenuItem>
+                          <MenuItem value={2}> small</MenuItem>
+                          <MenuItem value={3}> equal</MenuItem>
+                          <MenuItem value={4}> greater than equal</MenuItem>
+                          <MenuItem value={5}> less than equal</MenuItem>
+                        </Select>
+                      </FormControl>
                     </AtomGrid>
                     {/* <AtomGrid item>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>

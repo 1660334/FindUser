@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import AtomTypography from "../../../Atomic/atoms/AtomTypography";
 import AtomButton from "../../../Atomic/atoms/AtomButton";
-import AtomBox from "../../../Atomic/atoms/AtomBox";
 import AtomGrid from "../../../Atomic/atoms/AtomGrid";
-import Paper from "@material-ui/core/Paper";
+
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
@@ -15,11 +14,11 @@ import Avatar from "@material-ui/core/Avatar";
 import { allImage } from "./Avatar/Avatar";
 import TableDialog from "./Dialog/DialogTable";
 import { useUniqueId } from "../../helpers";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    paddingTop: theme.spacing(2),
-  },
+  root: {},
   avatar: {
     height: "100%",
     width: "100%",
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function TableListUser(props) {
   const classes = useStyles();
-  const { setArr, arr, filterArr, setFilterArr } = props;
+  const { setArr, filterArr, setFilterArr } = props;
 
   const userData = [
     {
@@ -115,16 +114,16 @@ export default function TableListUser(props) {
   };
 
   return (
-    <AtomBox>
-      <AtomGrid container>
-        <AtomGrid item xs={12}>
-          <Paper elevation={3}>
-            <AtomBox>
+    <AtomGrid container>
+      <AtomGrid item xs={12}>
+        <Card>
+          <CardContent>
+            <AtomTypography variant="h6" gutterBottom>
+              {" "}
+              <b>Danh sách người dùng</b>
+            </AtomTypography>
+            <Card>
               <TableContainer className={classes.root}>
-                <AtomTypography variant="h6" gutterBottom>
-                  {" "}
-                  <b>Danh sách người dùng</b>
-                </AtomTypography>
                 <Table
                   size="small"
                   aria-label="a dense table"
@@ -188,12 +187,12 @@ export default function TableListUser(props) {
                   </TableBody>
                 </Table>
               </TableContainer>
-            </AtomBox>
-          </Paper>
-        </AtomGrid>
+            </Card>
+          </CardContent>
+        </Card>
       </AtomGrid>
       {/* //chỉ khi nào open bằng true mới mở dialog và truyền data từ mảng vào cho props data bên component TableDialog */}
       {open && <TableDialog data={dataDialog} setOpen={setOpen} open={open} />}
-    </AtomBox>
+    </AtomGrid>
   );
 }
