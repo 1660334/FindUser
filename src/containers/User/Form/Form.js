@@ -60,7 +60,7 @@ export default function Form(props) {
   const handleSearch = (value) => {
     if (value !== "") {
       const rowNew = arr.filter(
-        (item) =>
+        (item, index) =>
           item.name
             .toUpperCase()
             .normalize("NFD")
@@ -76,7 +76,7 @@ export default function Form(props) {
                 .replace(/Đ/g, "D")
             ) ||
           item.bornyear === value ||
-          item.id === Number(value)
+          index + 1 === Number(value)
       );
 
       setFilterArr(rowNew);
@@ -84,6 +84,16 @@ export default function Form(props) {
       setFilterArr(arr);
     }
   };
+
+  // data ban dau khi them item
+  const newData = { id: arr.length + 1, avatar: "", name: "", bornyear: "" };
+
+  const hanldGetNewItem = () => {
+    setArr([...arr, newData]);
+    setFilterArr([...arr, newData]);
+    console.log("arr", arr)
+  };
+
 
   return (
     <AtomBox>
@@ -106,8 +116,9 @@ export default function Form(props) {
                         className={classes.muipicker}
                         id="fullName"
                         type="text"
+                        label="Tìm kiếm người dùng"
                         variant="outlined"
-                        placeholder="Nhập thông tin muốn tìm"
+                        placeholder="Nhập họ tên / ID / Năm sinh"
                         InputLabelProps={{
                           shrink: true,
                         }}
@@ -151,6 +162,8 @@ export default function Form(props) {
                         setArr={setArr}
                         arr={arr}
                         setFilterArr={setFilterArr}
+                        newData={newData}
+                        hanldGetNewItem={hanldGetNewItem}
                       />
                     </AtomGrid>
                   </AtomGrid>

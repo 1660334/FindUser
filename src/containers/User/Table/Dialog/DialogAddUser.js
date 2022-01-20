@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Button from "@material-ui/core/Button";
+import DateFnsUtils from "@date-io/date-fns";
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import AtomButton from "@material-ui/core/Button";
-import { useUniqueId } from "../../../helpers";
+import AtomButton from "../../../../Atomic/atoms/AtomButton";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(2),
@@ -25,8 +26,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FormDialog({ arr, setArr, setFilterArr }) {
+export default function FormDialog({
+  newData,
+  arr,
+  setArr,
+  setFilterArr,
+  hanldGetNewItem,
+}) {
   const classes = useStyles();
+  const yearRef = useRef();
 
   const [open, setOpen] = useState(false);
 
@@ -37,19 +45,18 @@ export default function FormDialog({ arr, setArr, setFilterArr }) {
     setOpen(false);
   };
 
-  const newData = { id: useUniqueId(), avatar: "", name: "", bornyear: "" };
-
   const handleGetData = (data, type) => {
+    if (type === "avatar") newData.avatar = data;
     if (type === "name") newData.name = data;
-    if (type === "bornyear") newData.bornyear = data;
+    if (type === "bornyear") {
+      newData.bornyear = data.getFullYear();
+    }
   };
 
-  const hanldGetNewItem = () => {
-    setArr([...arr, newData]);
-    setFilterArr([...arr, newData]);
-    setOpen(false);
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
   };
-
   return (
     <div>
       <AtomButton
@@ -66,8 +73,22 @@ export default function FormDialog({ arr, setArr, setFilterArr }) {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Thêm người dùng mới</DialogTitle>
+        <DialogTitle id="form-dialog-title" className={classes.dialogtitle}>
+          Thêm người dùng mới
+        </DialogTitle>
         <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Đường dẩn hình ảnh google"
+            type="text"
+            onChange={(event, data) => {
+              handleGetData(event.target.value, "avatar");
+            }}
+            fullWidth
+          />
+
           <TextField
             autoFocus
             margin="dense"
@@ -79,26 +100,47 @@ export default function FormDialog({ arr, setArr, setFilterArr }) {
             }}
             fullWidth
           />
-
-          <TextField
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <DatePicker
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+              views={["year"]}
+              format="yyyy"
+              openTo="year"
+              value={selectedDate}
+              onChange={(data) => {
+                handleDateChange(data);
+                handleGetData(data, "bornyear");
+              }}
+            />
+          </MuiPickersUtilsProvider>
+          {/* <TextField
             autoFocus
             margin="dense"
             id="birth"
-            type="date"
+            label="Nhập năm sinh"
+            type="text"
             onChange={(event) => {
               handleGetData(event.target.value, "bornyear");
             }}
             fullWidth
-          />
+          /> */}
         </DialogContent>
         <DialogActions>
-          <Button color="primary" onClick={hanldGetNewItem}>
+          <AtomButton
+            color="primary"
+            onClick={() => {
+              hanldGetNewItem();
+              setOpen(false);
+            }}
+          >
             Lưu
-          </Button>
+          </AtomButton>
 
-          <Button onClick={handleClose} color="primary">
+          <AtomButton onClick={handleClose} color="primary">
             đóng
-          </Button>
+          </AtomButton>
         </DialogActions>
       </Dialog>
     </div>

@@ -13,7 +13,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Avatar from "@material-ui/core/Avatar";
 import { allImage } from "./Avatar/Avatar";
 import TableDialog from "./Dialog/DialogTable";
-import { useUniqueId } from "../../helpers";
+
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
@@ -48,50 +48,50 @@ export default function TableListUser(props) {
 
   const userData = [
     {
-      id: useUniqueId(),
+      id: 1,
       avatar: allImage.h1,
       name: "Võ Lâm Quỳnh Như",
       bornyear: "2022",
     },
     {
-      id: useUniqueId(),
+      id: 2,
       avatar: allImage.h2,
       name: "Hoàng Võ Kì Lân",
       bornyear: "1990",
     },
 
     {
-      id: useUniqueId(),
+      id: 3,
       avatar: allImage.h3,
       name: "Huỳnh Quốc Luân",
       bornyear: "1996",
     },
     {
-      id: useUniqueId(),
+      id: 4,
       avatar: allImage.h4,
       name: "Võ Thị Thu Diễm",
       bornyear: "1996",
     },
     {
-      id: useUniqueId(),
+      id: 5,
       avatar: allImage.h5,
       name: "Huỳnh Thị Đào",
       bornyear: "1994",
     },
     {
-      id: useUniqueId(),
+      id: 6,
       avatar: allImage.h6,
       name: "Lê Đông Quốc",
       bornyear: "1998",
     },
     {
-      id: useUniqueId(),
+      id: 7,
       avatar: allImage.h2,
       name: "Trần Lê Anh Thư",
       bornyear: "2001",
     },
     {
-      id: useUniqueId(),
+      id: 8,
       avatar: allImage.h7,
       name: "Nguyễn Thị Cẩm Hồng",
       bornyear: "2002",
@@ -150,7 +150,7 @@ export default function TableListUser(props) {
                   <TableBody>
                     {filterArr.length > 0 ? (
                       filterArr.map((user) => (
-                        <TableRow>
+                        <TableRow key={user.id}>
                           <TableCell className={classes.widthId}>
                             {user.id}
                           </TableCell>
