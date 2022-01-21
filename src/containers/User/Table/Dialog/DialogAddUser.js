@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import DateFnsUtils from "@date-io/date-fns";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -10,31 +10,31 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import AtomButton from "../../../../Atomic/atoms/AtomButton";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: theme.spacing(2),
-    padding: theme.spacing(0),
+  widthDialog: {
+    width: "500px",
+    margin: "auto",
+    height: "100%",
+    padding: theme.spacing(3),
   },
-  muipicker: {
-    marginTop: theme.spacing(0),
-
-    marginRight: theme.spacing(4),
+  muiTextField: {
+    marginTop: theme.spacing(3),
   },
   buttonstyle: {
-    margin: theme.spacing(1),
+    marginTop: theme.spacing(1),
     borderRadius: "20px",
+    height: 55,
     textTransform: "none",
+  },
+  dialogtitle: {
+    textAlign: "center",
+  },
+  datePicker: {
+    marginTop: theme.spacing(3),
   },
 }));
 
-export default function FormDialog({
-  newData,
-  arr,
-  setArr,
-  setFilterArr,
-  hanldGetNewItem,
-}) {
+export default function FormDialog({ newData, hanldGetNewItem }) {
   const classes = useStyles();
-  const yearRef = useRef();
 
   const [open, setOpen] = useState(false);
 
@@ -72,60 +72,65 @@ export default function FormDialog({
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
+        className={classes.widthDialog}
       >
         <DialogTitle id="form-dialog-title" className={classes.dialogtitle}>
           Thêm người dùng mới
         </DialogTitle>
         <DialogContent>
           <TextField
+            className={classes.muiTextField}
             autoFocus
             margin="dense"
             id="name"
-            label="Đường dẩn hình ảnh google"
+            label="Ảnh đại diện"
+            placeholder="Nhập đường dẩn hình ảnh"
             type="text"
             onChange={(event, data) => {
               handleGetData(event.target.value, "avatar");
             }}
             fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
 
           <TextField
+            className={classes.muiTextField}
             autoFocus
             margin="dense"
             id="name"
-            label="Họ tên"
+            label="Họ và tên"
+            placeholder="Nhập họ và tên"
             type="text"
             onChange={(event, data) => {
               handleGetData(event.target.value, "name");
             }}
             fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <DatePicker
+              className={classes.datePicker}
               KeyboardButtonProps={{
                 "aria-label": "change date",
               }}
               views={["year"]}
               format="yyyy"
               openTo="year"
+              label="Chọn năm sinh"
               value={selectedDate}
               onChange={(data) => {
                 handleDateChange(data);
                 handleGetData(data, "bornyear");
               }}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </MuiPickersUtilsProvider>
-          {/* <TextField
-            autoFocus
-            margin="dense"
-            id="birth"
-            label="Nhập năm sinh"
-            type="text"
-            onChange={(event) => {
-              handleGetData(event.target.value, "bornyear");
-            }}
-            fullWidth
-          /> */}
         </DialogContent>
         <DialogActions>
           <AtomButton

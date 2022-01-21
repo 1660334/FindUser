@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core";
 import AtomTypography from "../../../Atomic/atoms/AtomTypography";
 import AtomButton from "../../../Atomic/atoms/AtomButton";
 import AtomGrid from "../../../Atomic/atoms/AtomGrid";
-
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
@@ -13,7 +12,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Avatar from "@material-ui/core/Avatar";
 import { allImage } from "./Avatar/Avatar";
 import TableDialog from "./Dialog/DialogTable";
-
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
