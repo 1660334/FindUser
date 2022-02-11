@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import AtomButton from "../../../../Atomic/atoms/AtomButton";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -43,10 +42,10 @@ export default function DialogTable(props) {
           className={classes.dialogcontent}
         >
           <Avatar className={classes.large} src={data.avatar} />
-          <AtomTypography className={classes.typography}>
+          <AtomTypography component={"div"} className={classes.typography}>
             <b>Họ và tên:</b> {data.name}
           </AtomTypography>
-          <AtomTypography>
+          <AtomTypography component={"div"}>
             <b>Năm sinh:</b> {data.bornyear}
           </AtomTypography>
         </DialogContentText>
@@ -59,8 +58,3 @@ export default function DialogTable(props) {
     </Dialog>
   );
 }
-DialogTable.propsTypes = {
-  avatar: PropTypes.string, // đường dẫn avatar
-  name: PropTypes.string,
-  birth: PropTypes.string,
-};

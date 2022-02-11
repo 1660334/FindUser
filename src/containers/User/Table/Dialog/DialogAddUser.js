@@ -8,6 +8,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AtomButton from "../../../../Atomic/atoms/AtomButton";
+import AtomBox from "../../../../Atomic/atoms/AtomBox";
 
 const useStyles = makeStyles((theme) => ({
   widthDialog: {
@@ -19,12 +20,7 @@ const useStyles = makeStyles((theme) => ({
   muiTextField: {
     marginTop: theme.spacing(3),
   },
-  buttonstyle: {
-    marginTop: theme.spacing(1),
-    borderRadius: "20px",
-    height: 55,
-    textTransform: "none",
-  },
+
   dialogtitle: {
     textAlign: "center",
   },
@@ -33,17 +29,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FormDialog({ newData, hanldGetNewItem }) {
+export default function FormDialog({
+  newData,
+  hanldGetNewItem,
+  openModalAddUser,
+  setOpenModalSetUser,
+}) {
   const classes = useStyles();
-
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleGetData = (data, type) => {
     if (type === "avatar") newData.avatar = data;
@@ -51,32 +43,26 @@ export default function FormDialog({ newData, hanldGetNewItem }) {
     if (type === "bornyear") {
       newData.bornyear = data.getFullYear();
     }
+    console.log("bornyear", newData);
   };
 
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
+
   return (
-    <div>
-      <AtomButton
-        variant="outlined"
-        className={classes.buttonstyle}
-        size="large"
-        color="primary"
-        onClick={handleOpen}
-      >
-        Thêm người dùng
-      </AtomButton>
+    <AtomBox>
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={openModalAddUser}
+        onClose={() => setOpenModalSetUser(false)}
         aria-labelledby="form-dialog-title"
         className={classes.widthDialog}
       >
         <DialogTitle id="form-dialog-title" className={classes.dialogtitle}>
           Thêm người dùng mới
         </DialogTitle>
+
         <DialogContent>
           <TextField
             className={classes.muiTextField}
@@ -86,6 +72,7 @@ export default function FormDialog({ newData, hanldGetNewItem }) {
             label="Ảnh đại diện"
             placeholder="Nhập đường dẩn hình ảnh"
             type="text"
+            required
             onChange={(event, data) => {
               handleGetData(event.target.value, "avatar");
             }}
@@ -97,10 +84,10 @@ export default function FormDialog({ newData, hanldGetNewItem }) {
 
           <TextField
             className={classes.muiTextField}
-            autoFocus
             margin="dense"
             id="name"
             label="Họ và tên"
+            required
             placeholder="Nhập họ và tên"
             type="text"
             onChange={(event, data) => {
@@ -114,14 +101,9 @@ export default function FormDialog({ newData, hanldGetNewItem }) {
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <DatePicker
               className={classes.datePicker}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
               views={["year"]}
-              format="yyyy"
-              openTo="year"
-              label="Chọn năm sinh"
               value={selectedDate}
+              label="Chọn năm sinh"
               onChange={(data) => {
                 handleDateChange(data);
                 handleGetData(data, "bornyear");
@@ -132,22 +114,33 @@ export default function FormDialog({ newData, hanldGetNewItem }) {
             />
           </MuiPickersUtilsProvider>
         </DialogContent>
-        <DialogActions>
-          <AtomButton
-            color="primary"
-            onClick={() => {
-              hanldGetNewItem();
-              setOpen(false);
-            }}
-          >
-            Lưu
-          </AtomButton>
 
-          <AtomButton onClick={handleClose} color="primary">
+        <DialogActions>
+          {newData.avatar !== "" &&
+          newData.name !== "" &&
+          newData.bornyear !== "" ? (
+            <AtomButton
+              color="primary"
+              onClick={() => {
+                hanldGetNewItem();
+                setOpenModalSetUser(false);
+              }}
+            >
+              Lưu
+            </AtomButton>
+          ) : (
+            <AtomButton color="primary" disabled>
+              Lưu
+            </AtomButton>
+          )}
+          <AtomButton
+            onClick={() => setOpenModalSetUser(false)}
+            color="primary"
+          >
             đóng
           </AtomButton>
         </DialogActions>
       </Dialog>
-    </div>
+    </AtomBox>
   );
 }

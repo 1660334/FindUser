@@ -7,7 +7,7 @@ import UserTableSearch from "./Table/TableListUser";
 export default function User() {
   const [arr, setArr] = React.useState([]);
   const [filterArr, setFilterArr] = React.useState([]);
-  console.log("arr", arr);
+
   return (
     <AtomBox pt={5}>
       <Container maxWidth="lg">

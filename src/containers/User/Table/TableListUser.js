@@ -17,15 +17,15 @@ import CardContent from "@material-ui/core/CardContent";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  avatar: {
-    height: "100%",
-    width: "100%",
-  },
+
   table: {
     minWidth: "700px",
   },
   widthTableCellname: {
     maxWidth: "100px",
+  },
+  widthNoData: {
+    minWidth: 200,
   },
   button: {
     textTransform: "none",
@@ -116,7 +116,7 @@ export default function TableListUser(props) {
       <AtomGrid item xs={12}>
         <Card>
           <CardContent>
-            <AtomTypography variant="h6" gutterBottom>
+            <AtomTypography component={"div"} variant="h6" gutterBottom>
               {" "}
               <b>Danh sách người dùng</b>
             </AtomTypography>
@@ -170,6 +170,7 @@ export default function TableListUser(props) {
                           <TableCell>
                             <AtomButton
                               className={classes.button}
+                              component={"span"}
                               size="small"
                               color="primary"
                               onClick={() => handleGetData(user)}
@@ -180,7 +181,23 @@ export default function TableListUser(props) {
                         </TableRow>
                       ))
                     ) : (
-                      <></>
+                      <TableRow>
+                        <TableCell className={classes.widthId}></TableCell>
+                        <TableCell
+                          className={classes.widthTableCell}
+                        ></TableCell>
+                        <TableCell
+                          align="right"
+                          className={classes.widthNoData}
+                        >
+                          Không tìm thấy dữ liệu tìm kiếm
+                        </TableCell>
+                        <TableCell
+                          className={classes.widthTableCell}
+                          align="center"
+                        ></TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
                     )}
                   </TableBody>
                 </Table>
