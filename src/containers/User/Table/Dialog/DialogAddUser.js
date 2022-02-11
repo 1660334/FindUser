@@ -36,6 +36,13 @@ export default function FormDialog({
   setOpenModalSetUser,
 }) {
   const classes = useStyles();
+  //bắt buộc phải khai báo useState khi ta muốn dữ liêuj tự động rander khi ta nhập
+  const [isFullData, setIsFullData] = useState(false);
+
+  const [selectedDate, setSelectedDate] = useState(null);
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   const handleGetData = (data, type) => {
     if (type === "avatar") newData.avatar = data;
@@ -43,12 +50,12 @@ export default function FormDialog({
     if (type === "bornyear") {
       newData.bornyear = data.getFullYear();
     }
-    console.log("bornyear", newData);
-  };
-
-  const [selectedDate, setSelectedDate] = useState(null);
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+    //điều kiện để kiểm tra các dữ liệu đầu vào có rỗng hay không
+    if (newData.avatar !== "" && newData.name !== "" && newData.bornyear !== "")
+      //nếu không rỗng thì thoả điều kiện và hàm setFullData sẻ được thay đổi thành true
+      setIsFullData(true);
+    else setIsFullData(false);
+    //ngược lại thì là false
   };
 
   return (
@@ -74,6 +81,7 @@ export default function FormDialog({
             type="text"
             required
             onChange={(event, data) => {
+              //vì không dung usestate nên không render lại khi ta nhập dữ liệu
               handleGetData(event.target.value, "avatar");
             }}
             fullWidth
@@ -105,6 +113,7 @@ export default function FormDialog({
               value={selectedDate}
               label="Chọn năm sinh"
               onChange={(data) => {
+                //ở đây ta dùng useState nên sẻ bị render lại khi ta chọn năm
                 handleDateChange(data);
                 handleGetData(data, "bornyear");
               }}
@@ -116,9 +125,7 @@ export default function FormDialog({
         </DialogContent>
 
         <DialogActions>
-          {newData.avatar !== "" &&
-          newData.name !== "" &&
-          newData.bornyear !== "" ? (
+          {isFullData ? (
             <AtomButton
               color="primary"
               onClick={() => {
