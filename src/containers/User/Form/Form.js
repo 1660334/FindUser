@@ -198,7 +198,26 @@ export default function Form(props) {
                           className={classes.root}
                           fullWidth
                           disabled
-                        ></FormControl>
+                        >
+                          <InputLabel
+                            shrink
+                            id="demo-simple-select-placeholder-label-label"
+                          >
+                            Select Year Search
+                          </InputLabel>
+                          <Select
+                            autoWidth
+                            className={classes.borderRadius}
+                            value={selectYearSearch}
+                            onChange={handleSelectYearSearch}
+                            inputProps={{ "aria-label": "Without label" }}
+                            displayEmpty
+                          >
+                            <MenuItem value="">
+                              <em>None</em>
+                            </MenuItem>
+                          </Select>
+                        </FormControl>
                       )}
                     </AtomGrid>
                   </AtomGrid>

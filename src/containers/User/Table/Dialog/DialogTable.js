@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
   },
   typography: {
-    paddingTop: "30px",
+    paddingTop: theme.spacing(3),
+    display: "flex",
   },
 }));
 
@@ -41,11 +42,15 @@ export default function DialogTable(props) {
           id="alert-dialog-description"
           className={classes.dialogcontent}
         >
-          <Avatar className={classes.large} src={data.avatar} />
-          <AtomTypography component={"div"} className={classes.typography}>
+          <Avatar
+            component={"span"}
+            className={classes.large}
+            src={data.avatar}
+          />
+          <AtomTypography component={"span"} className={classes.typography}>
             <b>Họ và tên:</b> {data.name}
           </AtomTypography>
-          <AtomTypography component={"div"}>
+          <AtomTypography component={"span"}>
             <b>Năm sinh:</b> {data.bornyear}
           </AtomTypography>
         </DialogContentText>
