@@ -63,7 +63,7 @@ export default function Form(props) {
                   .replace(/Đ/g, "D")
               ) || //hoặc
             //ĐK 2: value textSearch === item.bornyear trong mảng ban đầu(arr) thì filter những row thoả điều kiện
-            item.bornyear === textSearch ||
+            item.bornyear.includes(textSearch) ||
             //ĐK 3: value textSearch === ID index + 1(lấy id của table mui)   thì filter những row thoả điều kiện
             index + 1 === Number(textSearch)
           );

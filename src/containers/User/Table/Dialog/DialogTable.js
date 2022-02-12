@@ -57,7 +57,7 @@ export default function DialogTable(props) {
       </DialogContent>
       <DialogActions>
         <AtomButton onClick={() => setOpen(!open)} color="primary">
-          Close
+          Đóng
         </AtomButton>
       </DialogActions>
     </Dialog>
