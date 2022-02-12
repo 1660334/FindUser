@@ -79,6 +79,7 @@ export default function Form(props) {
         return item.bornyear === textSearch;
       });
       setFilterArr(rowNew);
+      console.log("rowNew", rowNew);
     } else {
       setFilterArr(arr);
     }

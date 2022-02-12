@@ -14,6 +14,10 @@ import { allImage } from "./Avatar/Avatar";
 import TableDialog from "./Dialog/DialogTable";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+// const randomNumber = () => {
+//   const num = Math.floor(Math.random() * 10000);
+//   return num;
+// };
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -42,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function TableListUser(props) {
   const classes = useStyles();
-  const { setArr, filterArr, setFilterArr } = props;
+  const { arr, setArr, filterArr, setFilterArr } = props;
 
   const userData = [
     {
@@ -105,6 +109,13 @@ export default function TableListUser(props) {
 
   const [dataDialog, setDataDialog] = useState({}); //tạo 1 biến để gan dữ liệu của row khi rander ra
 
+  const handleClickDeleteRows = (data) => {
+    const rowNew = arr.filter((item) => item.id !== data);
+
+    setArr(rowNew);
+    setFilterArr(rowNew);
+    console.log("rowNew", rowNew);
+  };
   const handleGetData = (data) => {
     //đây là hàm khi click vào button thì sẻ mở dialog lên , trong hàm thì ta truyền data vào khi dialog dc mở lên
     setDataDialog(data);
@@ -143,6 +154,7 @@ export default function TableListUser(props) {
                         Năm sinh
                       </TableCell>
                       <TableCell>Thông tin chi tiết</TableCell>
+                      <TableCell className={classes.widthTableCell}></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -176,6 +188,16 @@ export default function TableListUser(props) {
                               onClick={() => handleGetData(user)}
                             >
                               Xem chi tiết
+                            </AtomButton>
+                          </TableCell>
+                          <TableCell>
+                            <AtomButton
+                              className={classes.button}
+                              size="small"
+                              color="primary"
+                              onClick={(data) => handleClickDeleteRows(user.id)}
+                            >
+                              Xoá
                             </AtomButton>
                           </TableCell>
                         </TableRow>
