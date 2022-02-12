@@ -153,7 +153,7 @@ export default function TableListUser(props) {
                       >
                         Năm sinh
                       </TableCell>
-                      <TableCell>Thông tin chi tiết</TableCell>
+                      <TableCell align="right"></TableCell>
                       <TableCell className={classes.widthTableCell}></TableCell>
                     </TableRow>
                   </TableHead>
@@ -179,7 +179,7 @@ export default function TableListUser(props) {
                           >
                             {user.bornyear}
                           </TableCell>
-                          <TableCell>
+                          <TableCell align="right">
                             <AtomButton
                               className={classes.button}
                               component={"span"}
