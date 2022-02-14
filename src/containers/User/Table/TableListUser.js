@@ -48,7 +48,7 @@ export default function TableListUser(props) {
   useEffect(() => {
     setArr(dataUser);
     setFilterArr(dataUser);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   //tạo 1 state để mở và đóng dialog
   const [open, setOpen] = React.useState(false);

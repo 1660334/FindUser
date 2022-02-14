@@ -98,7 +98,7 @@ export default function Form(props) {
   // nếu có bất kì thay đổi nào thì render hamf firter onFilter()
   useEffect(() => {
     onFilter();
-  }, [selectYearSearch, textSearch]);
+  }, [selectYearSearch, textSearch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // data ban dau khi them item
   const newData = {
@@ -217,7 +217,6 @@ export default function Form(props) {
                             autoWidth
                             className={classes.borderRadius}
                             value={selectYearSearch}
-                            onChange={handleSelectYearSearch}
                             inputProps={{ "aria-label": "Without label" }}
                             displayEmpty
                           >
