@@ -10,6 +10,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import AtomButton from "../../../Atomic/atoms/AtomButton";
+import dataUsers from "../../../database/db.json";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
@@ -61,9 +63,10 @@ export default function Form(props) {
                   .replace(/[\u0300-\u036f]/g, "")
                   .replace(/đ/g, "d")
                   .replace(/Đ/g, "D")
-              ) || //hoặc
+              ) ||
+            //hoặc
             //ĐK 2: value textSearch === item.bornyear trong mảng ban đầu(arr) thì filter những row thoả điều kiện
-            item.bornyear.includes(textSearch) ||
+            item.bornyear === Number(textSearch) ||
             //ĐK 3: value textSearch === ID index + 1(lấy id của table mui)   thì filter những row thoả điều kiện
             index + 1 === Number(textSearch)
           );
@@ -79,7 +82,6 @@ export default function Form(props) {
         return item.bornyear === textSearch;
       });
       setFilterArr(rowNew);
-      console.log("rowNew", rowNew);
     } else {
       setFilterArr(arr);
     }
@@ -99,7 +101,12 @@ export default function Form(props) {
   }, [selectYearSearch, textSearch]);
 
   // data ban dau khi them item
-  const newData = { id: arr.length + 1, avatar: "", name: "", bornyear: "" };
+  const newData = {
+    name: "",
+    avatar: "",
+    bornyear: "",
+    id: dataUsers.length + 1,
+  };
   //hàm thêm 1 object data vào table sau khi click lưu
 
   const hanldGetNewItem = () => {

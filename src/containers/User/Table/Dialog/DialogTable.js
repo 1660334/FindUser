@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DialogTable(props) {
   //truyền các props sang cho component Table
   const { data, open, setOpen } = props;
+
   const classes = useStyles();
   return (
     <Dialog

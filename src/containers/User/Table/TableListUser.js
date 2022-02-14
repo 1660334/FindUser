@@ -10,14 +10,11 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Avatar from "@material-ui/core/Avatar";
-import { allImage } from "./Avatar/Avatar";
+
 import TableDialog from "./Dialog/DialogTable";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-// const randomNumber = () => {
-//   const num = Math.floor(Math.random() * 10000);
-//   return num;
-// };
+import dataUser from "../../../database/db.json";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -48,62 +45,11 @@ export default function TableListUser(props) {
   const classes = useStyles();
   const { arr, setArr, filterArr, setFilterArr } = props;
 
-  const userData = [
-    {
-      id: 1,
-      avatar: allImage.h1,
-      name: "Võ Lâm Quỳnh Như",
-      bornyear: "2022",
-    },
-    {
-      id: 2,
-      avatar: allImage.h2,
-      name: "Hoàng Võ Kì Lân",
-      bornyear: "1990",
-    },
-
-    {
-      id: 3,
-      avatar: allImage.h3,
-      name: "Huỳnh Quốc Luân",
-      bornyear: "1996",
-    },
-    {
-      id: 4,
-      avatar: allImage.h4,
-      name: "Võ Thị Thu Diễm",
-      bornyear: "1996",
-    },
-    {
-      id: 5,
-      avatar: allImage.h5,
-      name: "Huỳnh Thị Đào",
-      bornyear: "1994",
-    },
-    {
-      id: 6,
-      avatar: allImage.h6,
-      name: "Lê Đông Quốc",
-      bornyear: "1998",
-    },
-    {
-      id: 7,
-      avatar: allImage.h2,
-      name: "Trần Lê Anh Thư",
-      bornyear: "2001",
-    },
-    {
-      id: 8,
-      avatar: allImage.h7,
-      name: "Nguyễn Thị Cẩm Hồng",
-      bornyear: "2002",
-    },
-  ];
-
   useEffect(() => {
-    setArr(userData);
-    setFilterArr(userData);
+    setArr(dataUser);
+    setFilterArr(dataUser);
   }, []);
+
   //tạo 1 state để mở và đóng dialog
   const [open, setOpen] = React.useState(false);
 
@@ -124,6 +70,7 @@ export default function TableListUser(props) {
 
   return (
     <AtomGrid container>
+      <AtomGrid item xs={12}></AtomGrid>
       <AtomGrid item xs={12}>
         <Card>
           <CardContent>
@@ -204,21 +151,11 @@ export default function TableListUser(props) {
                       ))
                     ) : (
                       <TableRow>
-                        <TableCell className={classes.widthId}></TableCell>
-                        <TableCell
-                          className={classes.widthTableCell}
-                        ></TableCell>
-                        <TableCell
-                          align="right"
-                          className={classes.widthNoData}
-                        >
+                        <TableCell></TableCell>
+                        <TableCell></TableCell>
+                        <TableCell align="center">
                           Không tìm thấy dữ liệu tìm kiếm
                         </TableCell>
-                        <TableCell
-                          className={classes.widthTableCell}
-                          align="center"
-                        ></TableCell>
-                        <TableCell></TableCell>
                       </TableRow>
                     )}
                   </TableBody>
