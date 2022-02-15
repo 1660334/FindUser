@@ -10,17 +10,17 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Avatar from "@material-ui/core/Avatar";
-
 import TableDialog from "./Dialog/DialogTable";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import dataUser from "../../../database/db.json";
+import DialogAddUser from "./Dialog/DialogAddUser";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: { minWidth: "600px" },
 
   table: {
-    minWidth: "700px",
+    minWidth: "600px",
   },
   widthTableCellname: {
     maxWidth: "100px",
@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
   widthTableCell: {
     width: 80,
   },
+  widthTableCellbutton: {
+    width: 40,
+  },
   widthId: {
     width: 10,
   },
@@ -44,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
 export default function TableListUser(props) {
   const classes = useStyles();
   const { arr, setArr, filterArr, setFilterArr } = props;
-
   useEffect(() => {
     setArr(dataUser);
     setFilterArr(dataUser);
@@ -54,6 +56,8 @@ export default function TableListUser(props) {
   const [open, setOpen] = React.useState(false);
 
   const [dataDialog, setDataDialog] = useState({}); //tạo 1 biến để gan dữ liệu của row khi rander ra
+  const [dataDialogEdit, setDataDialogEdit] = useState({});
+  const [openModalAddUser, setOpenModalSetUser] = useState(false);
 
   const handleClickDeleteRows = (data) => {
     const rowNew = arr.filter((item) => item.id !== data);
@@ -61,6 +65,11 @@ export default function TableListUser(props) {
     setArr(rowNew);
     setFilterArr(rowNew);
     console.log("rowNew", rowNew);
+  };
+  const handleClickEditRows = (data) => {
+    setDataDialogEdit(data);
+    setOpenModalSetUser(true);
+    console.log("rowID", data);
   };
   const handleGetData = (data) => {
     //đây là hàm khi click vào button thì sẻ mở dialog lên , trong hàm thì ta truyền data vào khi dialog dc mở lên
@@ -70,7 +79,6 @@ export default function TableListUser(props) {
 
   return (
     <AtomGrid container>
-      <AtomGrid item xs={12}></AtomGrid>
       <AtomGrid item xs={12}>
         <Card>
           <CardContent>
@@ -101,7 +109,13 @@ export default function TableListUser(props) {
                         Năm sinh
                       </TableCell>
                       <TableCell align="right"></TableCell>
-                      <TableCell className={classes.widthTableCell}></TableCell>
+                      <TableCell
+                        align="right"
+                        className={classes.widthTableCellbutton}
+                      ></TableCell>
+                      <TableCell
+                        className={classes.widthTableCellbutton}
+                      ></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -142,6 +156,16 @@ export default function TableListUser(props) {
                               className={classes.button}
                               size="small"
                               color="primary"
+                              onClick={() => handleClickEditRows(user)}
+                            >
+                              Sửa
+                            </AtomButton>
+                          </TableCell>
+                          <TableCell>
+                            <AtomButton
+                              className={classes.button}
+                              size="small"
+                              color="primary"
                               onClick={(data) => handleClickDeleteRows(user.id)}
                             >
                               Xoá
@@ -167,6 +191,17 @@ export default function TableListUser(props) {
       </AtomGrid>
       {/* //chỉ khi nào open bằng true mới mở dialog và truyền data từ mảng vào cho props data bên component TableDialog */}
       {open && <TableDialog data={dataDialog} setOpen={setOpen} open={open} />}
+      {openModalAddUser && (
+        <DialogAddUser
+          setArr={setArr}
+          arr={arr}
+          setFilterArr={setFilterArr}
+          newData={dataDialogEdit}
+          openModalAddUser={openModalAddUser}
+          setOpenModalSetUser={setOpenModalSetUser}
+          isUpdate={true}
+        />
+      )}
     </AtomGrid>
   );
 }

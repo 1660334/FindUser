@@ -109,15 +109,18 @@ export default function Form(props) {
   };
   //hàm thêm 1 object data vào table sau khi click lưu
 
-  const hanldGetNewItem = () => {
+  const hanldGetNewItem = (isUpdate) => {
     if (
       newData.avatar.trim() !== "" &&
       newData.name.trim() !== "" &&
       newData.bornyear
     ) {
-      setArr([...arr, newData]);
+      if (isUpdate) {
+      } else {
+        setArr([...arr, newData]);
 
-      setFilterArr([...arr, newData]);
+        setFilterArr([...arr, newData]);
+      }
     }
   };
 
@@ -176,7 +179,7 @@ export default function Form(props) {
                       />
                     </AtomGrid>
                     <AtomGrid item xs={3}>
-                      {/* //điều kiện kiểm tra textSearch có phải là 1 number hay không  */}
+                      {/* //điều kiện kiểm tra textSearch có phải là 1 number và là 1 năm hay không nếu thoả điều kiện thì hiện select tìm kiếm year  */}
                       {(textSearch.length === 4 &&
                         !isNaN(Number(textSearch))) ||
                       false ? (
@@ -236,15 +239,17 @@ export default function Form(props) {
           </Paper>
         </AtomGrid>
       </AtomGrid>
+      {/* // mở component dialog khi open ="true"  */}
       {openModalAddUser && (
         <DialogAddUser
           setArr={setArr}
           arr={arr}
           setFilterArr={setFilterArr}
           newData={newData}
-          hanldGetNewItem={hanldGetNewItem}
+          hanldGetNewItem={hanldGetNewItem} //truyền function hanldGetNewItem cho dialog để thực thi hàm khi click vào button Lưu
           openModalAddUser={openModalAddUser}
           setOpenModalSetUser={setOpenModalSetUser}
+          isUpdate={false}
         />
       )}
     </AtomBox>

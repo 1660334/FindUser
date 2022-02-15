@@ -34,6 +34,7 @@ export default function FormDialog({
   hanldGetNewItem,
   openModalAddUser,
   setOpenModalSetUser,
+  isUpdate,
 }) {
   const classes = useStyles();
   //bắt buộc phải khai báo useState khi ta muốn dữ liêuj tự động rander khi ta nhập
@@ -73,11 +74,9 @@ export default function FormDialog({
         <DialogContent>
           <TextField
             className={classes.muiTextField}
-            autoFocus
             margin="dense"
-            id="name"
             label="Ảnh đại diện"
-            placeholder="Nhập đường dẩn hình ảnh"
+            placeholder={newData.avatar.toString()}
             type="text"
             required
             onChange={(event, data) => {
@@ -96,7 +95,7 @@ export default function FormDialog({
             id="name"
             label="Họ và tên"
             required
-            placeholder="Nhập họ và tên"
+            placeholder={newData.name.toString()}
             type="text"
             onChange={(event, data) => {
               handleGetData(event.target.value, "name");
@@ -112,6 +111,7 @@ export default function FormDialog({
               views={["year"]}
               value={selectedDate}
               label="Chọn năm sinh"
+              placeholder={newData.bornyear.toString()}
               onChange={(data) => {
                 //ở đây ta dùng useState nên sẻ bị render lại khi ta chọn năm
                 handleDateChange(data);
@@ -129,8 +129,12 @@ export default function FormDialog({
             <AtomButton
               color="primary"
               onClick={() => {
-                hanldGetNewItem();
-                setOpenModalSetUser(false);
+                if (isUpdate) {
+                  setOpenModalSetUser(false);
+                } else {
+                  hanldGetNewItem(isUpdate); // để mà khi em thêm 1 user mới thì khi bấm lưu nó lưu data vào array
+                  setOpenModalSetUser(false);
+                }
               }}
             >
               Lưu
