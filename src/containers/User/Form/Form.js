@@ -250,6 +250,7 @@ export default function Form(props) {
           openModalAddUser={openModalAddUser}
           setOpenModalSetUser={setOpenModalSetUser}
           isUpdate={false}
+          title={"Thêm người dùng mới"}
         />
       )}
     </AtomBox>

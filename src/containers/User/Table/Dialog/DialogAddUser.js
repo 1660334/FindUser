@@ -35,6 +35,7 @@ export default function FormDialog({
   openModalAddUser,
   setOpenModalSetUser,
   isUpdate,
+  title,
 }) {
   const classes = useStyles();
   //bắt buộc phải khai báo useState khi ta muốn dữ liêuj tự động rander khi ta nhập
@@ -68,7 +69,7 @@ export default function FormDialog({
         className={classes.widthDialog}
       >
         <DialogTitle id="form-dialog-title" className={classes.dialogtitle}>
-          Thêm người dùng mới
+          {title}
         </DialogTitle>
 
         <DialogContent>

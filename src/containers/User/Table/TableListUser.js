@@ -200,6 +200,7 @@ export default function TableListUser(props) {
           openModalAddUser={openModalAddUser}
           setOpenModalSetUser={setOpenModalSetUser}
           isUpdate={true}
+          title={"Thay đổi thông tin người dùng"}
         />
       )}
     </AtomGrid>
