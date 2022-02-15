@@ -79,7 +79,7 @@ export default function Form(props) {
         if (selectYearSearch === "lesser" && Number(textSearch)) {
           return item.bornyear < textSearch;
         }
-        return item.bornyear === textSearch;
+        return item.bornyear === Number(textSearch);
       });
       setFilterArr(rowNew);
     } else {
