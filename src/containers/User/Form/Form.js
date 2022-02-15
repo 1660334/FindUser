@@ -177,7 +177,9 @@ export default function Form(props) {
                     </AtomGrid>
                     <AtomGrid item xs={3}>
                       {/* //điều kiện kiểm tra textSearch có phải là 1 number hay không  */}
-                      {(textSearch && !isNaN(Number(textSearch))) || false ? (
+                      {(textSearch.length === 4 &&
+                        !isNaN(Number(textSearch))) ||
+                      false ? (
                         <FormControl className={classes.root} fullWidth>
                           <InputLabel
                             shrink
