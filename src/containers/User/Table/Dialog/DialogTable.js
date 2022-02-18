@@ -21,17 +21,20 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(3),
     display: "flex",
   },
+  b: {
+    paddingRight: theme.spacing(1),
+  },
 }));
 
 export default function DialogTable(props) {
   //truyền các props sang cho component Table
-  const { data, open, setOpen } = props;
+  const { dataDialogProfile, openDialogProfile, setOpenDialogProfile } = props;
 
   const classes = useStyles();
   return (
     <Dialog
-      open={open}
-      onClose={() => setOpen(!open)}
+      open={openDialogProfile}
+      onClose={() => setOpenDialogProfile(!openDialogProfile)}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -46,18 +49,21 @@ export default function DialogTable(props) {
           <Avatar
             component={"span"}
             className={classes.large}
-            src={data.avatar}
+            src={dataDialogProfile.avatar}
           />
           <AtomTypography component={"span"} className={classes.typography}>
-            <b>Họ và tên:</b> {data.name}
+            <b className={classes.b}>Họ và tên: </b> {dataDialogProfile.name}
           </AtomTypography>
           <AtomTypography component={"span"}>
-            <b>Năm sinh:</b> {data.bornyear}
+            <b>Năm sinh: </b> {dataDialogProfile.bornyear}
           </AtomTypography>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <AtomButton onClick={() => setOpen(!open)} color="primary">
+        <AtomButton
+          onClick={() => setOpenDialogProfile(!openDialogProfile)}
+          color="primary"
+        >
           Đóng
         </AtomButton>
       </DialogActions>

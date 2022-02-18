@@ -10,11 +10,12 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Avatar from "@material-ui/core/Avatar";
-import TableDialog from "./Dialog/DialogTable";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import dataUser from "../../../database/db.json";
-import DialogAddUser from "./Dialog/DialogAddUser";
+import TableDialog from "./Dialog/DialogTable";
+import DialogDeleteUser from "./Dialog/DialogDeleteUser";
+import DialogEditDataUser from "./Dialog/DialogDataEdit";
 
 const useStyles = makeStyles((theme) => ({
   root: { minWidth: "600px" },
@@ -43,39 +44,70 @@ const useStyles = makeStyles((theme) => ({
   widthId: {
     width: 10,
   },
+  buttonstyle: {
+    borderRadius: "20px",
+    height: 50,
+    textTransform: "none",
+  },
 }));
 export default function TableListUser(props) {
-  const classes = useStyles();
   const { arr, setArr, filterArr, setFilterArr } = props;
+  const classes = useStyles();
+
   useEffect(() => {
-    setArr(dataUser);
+    setArr(dataUser); //truyền data từ file .json cho hàm setArr để thay đổi giá trị biến arr ban đầu khi reload
     setFilterArr(dataUser);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   //tạo 1 state để mở và đóng dialog
-  const [open, setOpen] = React.useState(false);
-
-  const [dataDialog, setDataDialog] = useState({}); //tạo 1 biến để gan dữ liệu của row khi rander ra
+  const [openDialogProfile, setOpenDialogProfile] = useState(false);
+  const [dataDialogProfile, setDataDialogProfile] = useState({}); //tạo 1 biến để gan dữ liệu của row khi rander ra
+  const [openDialogDelete, setOpenDialogDelete] = useState(false);
+  const [dataDialogDelete, setDataDialogDelete] = useState({});
   const [dataDialogEdit, setDataDialogEdit] = useState({});
-  const [openModalAddUser, setOpenModalSetUser] = useState(false);
+  const [openDialogEditUser, setOpenDialogEditUser] = useState(false);
 
   const handleClickDeleteRows = (data) => {
-    const rowNew = arr.filter((item) => item.id !== data);
+    const rowNew = filterArr.filter((item) => item.id !== data);
 
-    setArr(rowNew);
     setFilterArr(rowNew);
+
     console.log("rowNew", rowNew);
   };
-  const handleClickEditRows = (data) => {
+
+  const dataEdit = {
+    name: "",
+    avatar: "",
+    bornyear: "",
+    id: dataDialogEdit.id,
+  };
+  const handleClickEditRowUser = (data) => {
+    return arr.filter((item) => {
+      if (item.id === data) {
+        arr[0] = dataEdit;
+        setFilterArr(arr);
+        console.log("arr[0]", arr[0]);
+        console.log("arr", arr);
+      }
+      return setFilterArr(arr);
+    });
+  };
+
+  const handleGetDataDialogEditUser = (data) => {
+    setOpenDialogEditUser(true);
     setDataDialogEdit(data);
-    setOpenModalSetUser(true);
-    console.log("rowID", data);
   };
-  const handleGetData = (data) => {
-    //đây là hàm khi click vào button thì sẻ mở dialog lên , trong hàm thì ta truyền data vào khi dialog dc mở lên
-    setDataDialog(data);
-    setOpen(true);
+  const handleGetDataDialogDeleteUser = (data) => {
+    setOpenDialogDelete(true);
+    setDataDialogDelete(data);
   };
+  const handleGetDataDialogProfile = (data) => {
+    //KHI CLICK VÀO THÌ BIẾN OPEN SẺ THAY ĐỔI THÀNH TRUE VÀ MỞ DIALOG XEM CHI TIẾT LÊN
+    setOpenDialogProfile(true);
+    setDataDialogProfile(data);
+  };
+
+  //hàm thêm 1 object data vào table sau khi click lưu
 
   return (
     <AtomGrid container>
@@ -86,6 +118,7 @@ export default function TableListUser(props) {
               {" "}
               <b>Danh sách người dùng</b>
             </AtomTypography>
+
             <Card>
               <TableContainer className={classes.root}>
                 <Table
@@ -146,7 +179,10 @@ export default function TableListUser(props) {
                               component={"span"}
                               size="small"
                               color="primary"
-                              onClick={() => handleGetData(user)}
+                              onClick={() => {
+                                handleGetDataDialogProfile(user);
+                                console.log("user", user);
+                              }}
                             >
                               Xem chi tiết
                             </AtomButton>
@@ -156,7 +192,9 @@ export default function TableListUser(props) {
                               className={classes.button}
                               size="small"
                               color="primary"
-                              onClick={() => handleClickEditRows(user)}
+                              onClick={(data) =>
+                                handleGetDataDialogEditUser(user)
+                              }
                             >
                               Sửa
                             </AtomButton>
@@ -166,7 +204,10 @@ export default function TableListUser(props) {
                               className={classes.button}
                               size="small"
                               color="primary"
-                              onClick={(data) => handleClickDeleteRows(user.id)}
+                              onClick={(data) => {
+                                handleGetDataDialogDeleteUser(user.id);
+                                console.log("id", user.id);
+                              }}
                             >
                               Xoá
                             </AtomButton>
@@ -190,17 +231,29 @@ export default function TableListUser(props) {
         </Card>
       </AtomGrid>
       {/* //chỉ khi nào open bằng true mới mở dialog và truyền data từ mảng vào cho props data bên component TableDialog */}
-      {open && <TableDialog data={dataDialog} setOpen={setOpen} open={open} />}
-      {openModalAddUser && (
-        <DialogAddUser
-          setArr={setArr}
-          arr={arr}
-          setFilterArr={setFilterArr}
-          newData={dataDialogEdit}
-          openModalAddUser={openModalAddUser}
-          setOpenModalSetUser={setOpenModalSetUser}
-          isUpdate={true}
-          title={"Thay đổi thông tin người dùng"}
+      {openDialogProfile && (
+        <TableDialog
+          dataDialogProfile={dataDialogProfile}
+          setOpenDialogProfile={setOpenDialogProfile}
+          openDialogProfile={openDialogProfile}
+        />
+      )}
+      {openDialogDelete && (
+        <DialogDeleteUser
+          dataDialogDelete={dataDialogDelete}
+          openDialogDelete={openDialogDelete}
+          setOpenDialogDelete={setOpenDialogDelete}
+          handleClickDeleteRows={handleClickDeleteRows}
+        />
+      )}
+      {openDialogEditUser && (
+        <DialogEditDataUser
+          openDialogEditUser={openDialogEditUser}
+          setOpenDialogEditUser={setOpenDialogEditUser}
+          dataDialogEdit={dataDialogEdit}
+          handleClickEditRowUser={handleClickEditRowUser}
+          dataEdit={dataEdit}
+          isClick="false"
         />
       )}
     </AtomGrid>

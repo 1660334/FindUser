@@ -5,13 +5,11 @@ import AtomTextField from "../../../Atomic/atoms/AtomTextField";
 import AtomBox from "../../../Atomic/atoms/AtomBox";
 import AtomGrid from "../../../Atomic/atoms/AtomGrid";
 import { Paper } from "@material-ui/core";
-import DialogAddUser from "../Table/Dialog/DialogAddUser";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import AtomButton from "../../../Atomic/atoms/AtomButton";
-import dataUsers from "../../../database/db.json";
-
+import DialogEditUser from "../Table/Dialog/DialogDataEdit";
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
@@ -32,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
   },
   title: {
+    paddingBottom: theme.spacing(2),
     fontWeight: "bold",
   },
 }));
@@ -40,50 +39,116 @@ export default function Form(props) {
   const { arr, setArr, setFilterArr } = props;
   const [selectYearSearch, setSelectYearSearch] = useState("");
   const [textSearch, setTextSearch] = useState("");
+  const [openDialogEditUser, setOpenDialogEditUser] = useState(false);
   const classes = useStyles();
+  const handleClickAddUser = () => {
+    setOpenDialogEditUser(true);
+  };
+  const newData = {
+    name: "",
+    avatar: "",
+    bornyear: "",
+    id: arr.length + 1,
+  };
+  const hanldClickAddRowUser = () => {
+    if (
+      newData.avatar.trim() !== "" &&
+      newData.name.trim() !== "" &&
+      newData.bornyear
+    ) {
+      setArr([...arr, newData]);
+      setFilterArr([...arr, newData]);
+    }
+  };
+
   //hàm onFilter để filter khi value # null nếu value = null thì return mảng gốc.
   // ngược lại thì tiến hành filter ó điều kiện,  xem có thoả value hay không? rồi tiến hành filter
   const onFilter = () => {
     if (textSearch !== "") {
+      // const rowNew = arr.filter((item, index) => {
+      //   if (selectYearSearch === "") {
+      //     return (
+      //       item.name
+      //         .toUpperCase()
+      //         .normalize("NFD")
+      //         .replace(/[\u0300-\u036f]/g, "")
+      //         .replace(/đ/g, "d")
+      //         .replace(/Đ/g, "D")
+      //         .includes(
+      //           textSearch
+      //             .toUpperCase()
+      //             .normalize("NFD")
+      //             .replace(/[\u0300-\u036f]/g, "")
+      //             .replace(/đ/g, "d")
+      //             .replace(/Đ/g, "D")
+      //         ) ||
+      //       item.bornyear === Number(textSearch) ||
+      //       index + 1 === Number(textSearch)
+      //     );
+      //   }
+      //   if (selectYearSearch === "bigger" && Number(textSearch)) {
+      //     return item.bornyear > textSearch;
+      //   }
+      //   if (selectYearSearch === "lesser" && Number(textSearch)) {
+      //     return item.bornyear < textSearch;
+      //   }
+      //   return item.bornyear === Number(textSearch);
+      // });
+
+      // setFilterArr(rowNew);
+      // console.log("rowNew", rowNew);
       const rowNew = arr.filter((item, index) => {
         if (selectYearSearch === "") {
-          //nếu value selectYear là null thì filter ra những giá trị thoả một trong các điều kiện bên dưới
-          return (
-            //ĐK 1 : value textSearch === item.name trong mảng ban đầu(arr) thì filter những row thoả điều kiện
-            item.name
-              .toUpperCase()
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "")
-              .replace(/đ/g, "d")
-              .replace(/Đ/g, "D")
-              .includes(
-                textSearch
-                  .toUpperCase()
-                  .normalize("NFD")
-                  .replace(/[\u0300-\u036f]/g, "")
-                  .replace(/đ/g, "d")
-                  .replace(/Đ/g, "D")
-              ) ||
-            //hoặc
-            //ĐK 2: value textSearch === item.bornyear trong mảng ban đầu(arr) thì filter những row thoả điều kiện
-            item.bornyear === Number(textSearch) ||
-            //ĐK 3: value textSearch === ID index + 1(lấy id của table mui)   thì filter những row thoả điều kiện
-            index + 1 === Number(textSearch)
-          );
+          const textSearchSplit = textSearch.split(" ");
+          console.log("textSearchSplit", textSearchSplit);
+          let counter = 0;
+          for (let i = 0; i < textSearchSplit.length; i++) {
+            if (
+              item.name
+                .toUpperCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/đ/g, "d")
+                .replace(/Đ/g, "D")
+                .includes(
+                  textSearchSplit[i]
+                    .toUpperCase()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .replace(/đ/g, "d")
+                    .replace(/Đ/g, "D")
+                ) ||
+              String(item.bornyear)
+                .toUpperCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/đ/g, "d")
+                .replace(/Đ/g, "D")
+                .includes(
+                  textSearchSplit[i]
+                    .toUpperCase()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .replace(/đ/g, "d")
+                    .replace(/Đ/g, "D")
+                ) ||
+              String(item.bornyear).includes(textSearch) ||
+              index + 1 === Number(textSearch)
+            ) {
+              counter++;
+            }
+          }
+          console.log("String", typeof String(item.bornyear));
+          if (counter === textSearchSplit.length) return true;
+          return false;
         }
-        //nếu value selectYear === "big" thì filter ra những row thoả  điều kiện item.bornyear > textSearch từ mảng ban đầu
-        if (selectYearSearch === "bigger" && Number(textSearch)) {
-          return item.bornyear > textSearch;
-        }
-        //nếu value selectYear === "small" thì filter ra những row thoả  điều kiện item.bornyear < textSearch; từ mảng ban đầu
-        if (selectYearSearch === "lesser" && Number(textSearch)) {
-          return item.bornyear < textSearch;
-        }
-        return item.bornyear === Number(textSearch);
       });
+
       setFilterArr(rowNew);
+      console.log("filteredArray", rowNew);
     } else {
       setFilterArr(arr);
+      console.log("arr", arr);
     }
   };
   // hàm handleSelectYear truyền value ta select chọn cho hàm setTextSearch() để thay đổi giá trị hiện tại của selectYear
@@ -101,57 +166,29 @@ export default function Form(props) {
   }, [selectYearSearch, textSearch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // data ban dau khi them item
-  const newData = {
-    name: "",
-    avatar: "",
-    bornyear: "",
-    id: dataUsers.length + 1,
-  };
-  //hàm thêm 1 object data vào table sau khi click lưu
-
-  const hanldGetNewItem = (isUpdate) => {
-    if (
-      newData.avatar.trim() !== "" &&
-      newData.name.trim() !== "" &&
-      newData.bornyear
-    ) {
-      if (isUpdate) {
-      } else {
-        setArr([...arr, newData]);
-
-        setFilterArr([...arr, newData]);
-      }
-    }
-  };
-
-  const [openModalAddUser, setOpenModalSetUser] = useState(false);
 
   return (
     <AtomBox>
       <AtomGrid container>
         <AtomGrid item xs={12}>
-          <AtomGrid container justifyContent="space-between">
-            <AtomGrid item>
-              <AtomTypography
-                component={"div"}
-                variant="h5"
-                className={classes.title}
-              >
-                Quản lý người dùng!
-              </AtomTypography>
-            </AtomGrid>
-            <AtomGrid item>
-              <AtomButton
-                variant="outlined"
-                className={classes.buttonstyle}
-                size="large"
-                color="primary"
-                onClick={() => setOpenModalSetUser(true)}
-              >
-                Thêm người dùng
-              </AtomButton>
-            </AtomGrid>
-          </AtomGrid>
+          <AtomTypography
+            component={"span"}
+            variant="h5"
+            className={classes.title}
+          >
+            Quản lý người dùng!
+          </AtomTypography>
+          <AtomTypography align="right">
+            <AtomButton
+              variant="outlined"
+              className={classes.buttonstyle}
+              size="large"
+              color="primary"
+              onClick={() => handleClickAddUser()}
+            >
+              Thêm người dùng
+            </AtomButton>
+          </AtomTypography>
         </AtomGrid>
 
         <AtomGrid item xs={12}>
@@ -239,18 +276,13 @@ export default function Form(props) {
           </Paper>
         </AtomGrid>
       </AtomGrid>
-      {/* // mở component dialog khi open ="true"  */}
-      {openModalAddUser && (
-        <DialogAddUser
-          setArr={setArr}
-          arr={arr}
-          setFilterArr={setFilterArr}
+      {openDialogEditUser && (
+        <DialogEditUser
+          openDialogEditUser={openDialogEditUser}
+          setOpenDialogEditUser={setOpenDialogEditUser}
+          hanldClickAddRowUser={hanldClickAddRowUser}
           newData={newData}
-          hanldGetNewItem={hanldGetNewItem} //truyền function hanldGetNewItem cho dialog để thực thi hàm khi click vào button Lưu
-          openModalAddUser={openModalAddUser}
-          setOpenModalSetUser={setOpenModalSetUser}
-          isUpdate={false}
-          title={"Thêm người dùng mới"}
+          isClick="true"
         />
       )}
     </AtomBox>
