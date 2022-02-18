@@ -182,7 +182,7 @@ export default function FormDialog(props) {
                         className={classes.error}
                         component={"span"}
                       >
-                        Không hợp lệ! Họ tên không được chứa kí tự đặt biệt, số
+                        Họ tên không được chứa kí tự đặt biệt, số
                       </AtomTypography>
                     );
                   }
@@ -209,7 +209,7 @@ export default function FormDialog(props) {
                           className={classes.error}
                           component={"span"}
                         >
-                          Không hợp lệ! Năm chọn phải nhỏ hơn năm hiện tại
+                          Năm chọn phải nhỏ hơn năm hiện tại
                         </AtomTypography>
                       );
                   }}
@@ -279,7 +279,7 @@ export default function FormDialog(props) {
                         className={classes.error}
                         component={"span"}
                       >
-                        Không hợp lệ! Họ tên không được chứa kí tự đặt biệt, số
+                        Họ tên không được chứa kí tự đặt biệt, số
                       </AtomTypography>
                     );
                   }
@@ -306,7 +306,7 @@ export default function FormDialog(props) {
                           className={classes.error}
                           component={"span"}
                         >
-                          Không hợp lệ! Năm chọn phải nhỏ hơn năm hiện tại
+                          Năm chọn phải nhỏ hơn năm hiện tại
                         </AtomTypography>
                       );
                   }}
