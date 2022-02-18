@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   b: {
     paddingRight: theme.spacing(1),
   },
+  buttonstyle: {
+    textTransform: "none",
+  },
 }));
 
 export default function DialogTable(props) {
@@ -61,6 +64,7 @@ export default function DialogTable(props) {
       </DialogContent>
       <DialogActions>
         <AtomButton
+          className={classes.buttonstyle}
           onClick={() => setOpenDialogProfile(!openDialogProfile)}
           color="primary"
         >

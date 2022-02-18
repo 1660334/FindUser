@@ -138,10 +138,16 @@ export default function Form(props) {
               counter++;
             }
           }
-          console.log("String", typeof String(item.bornyear));
           if (counter === textSearchSplit.length) return true;
           return false;
         }
+        if (selectYearSearch === "bigger" && Number(textSearch)) {
+          return item.bornyear > textSearch;
+        }
+        if (selectYearSearch === "lesser" && Number(textSearch)) {
+          return item.bornyear < textSearch;
+        }
+        return item.bornyear === Number(textSearch);
       });
 
       setFilterArr(rowNew);

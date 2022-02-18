@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
   error: {
     color: "red",
   },
+
+  buttonstyle: {
+    textTransform: "none",
+  },
 }));
 
 export default function FormDialog(props) {
@@ -319,6 +323,7 @@ export default function FormDialog(props) {
         <DialogActions>
           {isFullData ? (
             <AtomButton
+              className={classes.buttonstyle}
               color="primary"
               onClick={() => {
                 if (isClick === "true") {
@@ -331,15 +336,20 @@ export default function FormDialog(props) {
               Lưu
             </AtomButton>
           ) : (
-            <AtomButton color="primary" disabled>
+            <AtomButton
+              className={classes.buttonstyle}
+              color="primary"
+              disabled
+            >
               Lưu
             </AtomButton>
           )}
           <AtomButton
+            className={classes.buttonstyle}
             onClick={() => setOpenDialogEditUser(!openDialogEditUser)}
             color="primary"
           >
-            đóng
+            Đóng
           </AtomButton>
         </DialogActions>
       </Dialog>
