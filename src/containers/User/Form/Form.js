@@ -39,10 +39,10 @@ export default function Form(props) {
   const { arr, setArr, setFilterArr } = props;
   const [selectYearSearch, setSelectYearSearch] = useState("");
   const [textSearch, setTextSearch] = useState("");
-  const [openDialogEditUser, setOpenDialogEditUser] = useState(false);
+  const [openDialogChangeUser, setOpenDialogChangeUser] = useState(false);
   const classes = useStyles();
   const handleClickAddUser = () => {
-    setOpenDialogEditUser(true);
+    setOpenDialogChangeUser(true);
   };
   const newData = {
     name: "",
@@ -65,38 +65,6 @@ export default function Form(props) {
   // ngược lại thì tiến hành filter ó điều kiện,  xem có thoả value hay không? rồi tiến hành filter
   const onFilter = () => {
     if (textSearch !== "") {
-      // const rowNew = arr.filter((item, index) => {
-      //   if (selectYearSearch === "") {
-      //     return (
-      //       item.name
-      //         .toUpperCase()
-      //         .normalize("NFD")
-      //         .replace(/[\u0300-\u036f]/g, "")
-      //         .replace(/đ/g, "d")
-      //         .replace(/Đ/g, "D")
-      //         .includes(
-      //           textSearch
-      //             .toUpperCase()
-      //             .normalize("NFD")
-      //             .replace(/[\u0300-\u036f]/g, "")
-      //             .replace(/đ/g, "d")
-      //             .replace(/Đ/g, "D")
-      //         ) ||
-      //       item.bornyear === Number(textSearch) ||
-      //       index + 1 === Number(textSearch)
-      //     );
-      //   }
-      //   if (selectYearSearch === "bigger" && Number(textSearch)) {
-      //     return item.bornyear > textSearch;
-      //   }
-      //   if (selectYearSearch === "lesser" && Number(textSearch)) {
-      //     return item.bornyear < textSearch;
-      //   }
-      //   return item.bornyear === Number(textSearch);
-      // });
-
-      // setFilterArr(rowNew);
-      // console.log("rowNew", rowNew);
       const rowNew = arr.filter((item, index) => {
         if (selectYearSearch === "") {
           const textSearchSplit = textSearch.split(" ");
@@ -282,13 +250,13 @@ export default function Form(props) {
           </Paper>
         </AtomGrid>
       </AtomGrid>
-      {openDialogEditUser && (
+      {openDialogChangeUser && (
         <DialogEditUser
-          openDialogEditUser={openDialogEditUser}
-          setOpenDialogEditUser={setOpenDialogEditUser}
+          openDialogChangeUser={openDialogChangeUser}
+          setOpenDialogChangeUser={setOpenDialogChangeUser}
           hanldClickAddRowUser={hanldClickAddRowUser}
           newData={newData}
-          isClick="true"
+          isCheckClick="true"
         />
       )}
     </AtomBox>

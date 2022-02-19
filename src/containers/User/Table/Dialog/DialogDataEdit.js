@@ -9,8 +9,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AtomButton from "../../../../Atomic/atoms/AtomButton";
 import AtomBox from "../../../../Atomic/atoms/AtomBox";
-import isUrl from "validator/lib/isURL";
-import AtomTypography from "../../../../Atomic/atoms/AtomTypography";
 
 const useStyles = makeStyles((theme) => ({
   widthDialog: {
@@ -40,14 +38,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FormDialog(props) {
   const {
-    openDialogEditUser,
-    setOpenDialogEditUser,
-    dataDialogEdit,
+    openDialogChangeUser,
+    setOpenDialogChangeUser,
+    getDataEdit,
     handleClickEditRowUser,
     hanldClickAddRowUser,
     dataEdit,
     newData,
-    isClick,
+    isCheckClick,
   } = props;
   const classes = useStyles();
   //bắt buộc phải khai báo useState khi ta muốn dữ liêuj tự động rander khi ta nhập
@@ -62,8 +60,34 @@ export default function FormDialog(props) {
     handleDataEdit(data);
     console.log("date", data);
   };
+  const isCheckName = (data) => {
+    if (
+      !/\d|!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g.test(
+        data
+      )
+    ) {
+      handleDataEdit(data, "name");
+      setErrName("");
+    } else setErrName("false");
+  };
+  const isCheckYear = (data) => {
+    if (data.getFullYear() <= new Date().getFullYear()) {
+      handleDateChange(data);
+      setErrDate("");
+    } else {
+      setErrDate("false");
+    }
+  };
+  const isCheckImgLink = (url) => {
+    if (typeof url !== "string") {
+      return false;
+    }
+    return (
+      url.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) !== null
+    );
+  };
   const handleDataEdit = (data, type) => {
-    if (isClick === "true") {
+    if (isCheckClick === "true") {
       console.log("date", data);
       if (data !== "" && type === "avatar") {
         console.log("data", data);
@@ -80,7 +104,7 @@ export default function FormDialog(props) {
       //điều kiện để kiểm tra các dữ liệu đầu vào có rỗng hay không
       if (
         newData.avatar !== "" &&
-        isUrl(newData.avatar) &&
+        isCheckImgLink(newData.avatar) &&
         newData.name !== "" &&
         newData.bornyear !== "" &&
         newData.bornyear <= new Date().getFullYear()
@@ -92,21 +116,19 @@ export default function FormDialog(props) {
     } else {
       console.log("date", data);
       if (data !== "" && type === "avatar") {
-        console.log("data", data);
         dataEdit.avatar = data;
       }
       if (data !== "" && type === "name") {
-        console.log("data", data);
         dataEdit.name = data;
       }
       //dùng instanceof Date để kiểm tra biến data có phải là 1 Date không!
-      if (data !== "" && data instanceof Date) {
+      if (data !== "") {
         dataEdit.bornyear = data.getFullYear();
       }
       //điều kiện để kiểm tra các dữ liệu đầu vào có rỗng hay không
       if (
         dataEdit.avatar !== "" &&
-        isUrl(dataEdit.avatar) &&
+        isCheckImgLink(dataEdit.avatar) &&
         dataEdit.name !== "" &&
         dataEdit.bornyear !== "" &&
         dataEdit.bornyear <= new Date().getFullYear()
@@ -114,17 +136,16 @@ export default function FormDialog(props) {
         //nếu không rỗng thì thoả điều kiện và hàm setFullData sẻ được thay đổi thành true
         setIsFullData(true);
       else setIsFullData(false);
-      //ngược lại thì là false
     }
   };
   return (
     <AtomBox>
       <Dialog
-        open={openDialogEditUser}
-        onClose={() => setOpenDialogEditUser(!openDialogEditUser)}
+        open={openDialogChangeUser}
+        onClose={() => setOpenDialogChangeUser(!openDialogChangeUser)}
         aria-labelledby="form-dialog-title"
       >
-        {isClick === "true" ? (
+        {isCheckClick === "true" ? (
           <AtomBox className={classes.widthDialog}>
             <DialogTitle id="form-dialog-title" className={classes.dialogtitle}>
               Thêm người dùng mới
@@ -135,19 +156,16 @@ export default function FormDialog(props) {
                 className={classes.muiTextField}
                 margin="dense"
                 label="Ảnh đại diện"
-                placeholder="Nhập đường dẩn hình ảnh"
                 required
                 fullWidth
+                error={!!errAvatar}
+                helperText="Nhập url hình ảnh"
                 onChange={(event, data) => {
-                  if (event.target.value !== "" && !isUrl(event.target.value)) {
-                    setErrAvatar(
-                      <AtomTypography
-                        className={classes.error}
-                        component={"span"}
-                      >
-                        Hình ảnh phải là đường dẩn http
-                      </AtomTypography>
-                    );
+                  if (
+                    event.target.value !== "" &&
+                    !isCheckImgLink(event.target.value)
+                  ) {
+                    setErrAvatar("false");
                   } else {
                     setErrAvatar("");
                     handleDataEdit(event.target.value, "avatar");
@@ -157,67 +175,40 @@ export default function FormDialog(props) {
                   shrink: true,
                 }}
               />
-              <AtomTypography>{errAvatar}</AtomTypography>
+
               <TextField
                 className={classes.muiTextField}
                 margin="dense"
                 id="name"
                 label="Họ và tên"
                 required
-                placeholder="Nhập họ và tên"
                 type="text"
                 fullWidth
+                error={!!errName}
+                helperText="Tên không được chứa kí tự, số"
                 onChange={(event, data) => {
-                  if (
-                    !/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?1-9]/g.test(
-                      event.target.value
-                    )
-                  ) {
-                    console.log("da vao day");
-                    handleDataEdit(event.target.value, "name");
-                    setErrName("");
-                  } else {
-                    setErrName(
-                      <AtomTypography
-                        className={classes.error}
-                        component={"span"}
-                      >
-                        Họ tên không được chứa kí tự đặt biệt, số
-                      </AtomTypography>
-                    );
-                  }
+                  isCheckName(event.target.value);
                 }}
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
-              <AtomTypography>{errName}</AtomTypography>
+
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                   className={classes.datePicker}
                   views={["year"]}
                   value={selectedDate}
                   label="Năm sinh"
-                  placeholder="Chọn năm sinh"
+                  error={!!errDate}
+                  helperText="Năm không vượt quá năm hiện tại"
                   onChange={(data) => {
-                    if (data.getFullYear() <= new Date().getFullYear()) {
-                      handleDateChange(data);
-                      setErrDate("");
-                    } else
-                      setErrDate(
-                        <AtomTypography
-                          className={classes.error}
-                          component={"span"}
-                        >
-                          Năm chọn phải nhỏ hơn năm hiện tại
-                        </AtomTypography>
-                      );
+                    isCheckYear(data);
                   }}
                   InputLabelProps={{
                     shrink: true,
                   }}
                 />
-                <AtomTypography>{errDate}</AtomTypography>
               </MuiPickersUtilsProvider>
             </DialogContent>
           </AtomBox>
@@ -232,19 +223,17 @@ export default function FormDialog(props) {
                 className={classes.muiTextField}
                 margin="dense"
                 label="Ảnh đại diện"
-                placeholder={dataDialogEdit.avatar.toString()}
+                placeholder={getDataEdit.avatar.toString()}
                 required
                 fullWidth
+                error={!!errAvatar}
+                helperText="Nhập url hình ảnh"
                 onChange={(event, data) => {
-                  if (event.target.value !== "" && !isUrl(event.target.value)) {
-                    setErrAvatar(
-                      <AtomTypography
-                        className={classes.error}
-                        component={"span"}
-                      >
-                        Hình ảnh phải là đường dẩn http
-                      </AtomTypography>
-                    );
+                  if (
+                    event.target.value !== "" &&
+                    !isCheckImgLink(event.target.value)
+                  ) {
+                    setErrAvatar("false");
                   } else {
                     setErrAvatar("");
                     handleDataEdit(event.target.value, "avatar");
@@ -254,67 +243,42 @@ export default function FormDialog(props) {
                   shrink: true,
                 }}
               />
-              <AtomTypography>{errAvatar}</AtomTypography>
+
               <TextField
                 className={classes.muiTextField}
                 margin="dense"
                 id="name"
                 label="Họ và tên"
                 required
-                placeholder={dataDialogEdit.name.toString()}
+                placeholder={getDataEdit.name.toString()}
                 type="text"
                 fullWidth
+                error={!!errName}
+                helperText="Tên không được chứa kí tự, số"
                 onChange={(event, data) => {
-                  if (
-                    !/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?1-9]/g.test(
-                      event.target.value
-                    )
-                  ) {
-                    console.log("da vao day");
-                    handleDataEdit(event.target.value, "name");
-                    setErrName("");
-                  } else {
-                    setErrName(
-                      <AtomTypography
-                        className={classes.error}
-                        component={"span"}
-                      >
-                        Họ tên không được chứa kí tự đặt biệt, số
-                      </AtomTypography>
-                    );
-                  }
+                  isCheckName(event.target.value);
                 }}
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
-              <AtomTypography>{errName}</AtomTypography>
+
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                   className={classes.datePicker}
                   views={["year"]}
                   value={selectedDate}
                   label="Năm sinh"
-                  placeholder={dataDialogEdit.bornyear.toString()}
+                  placeholder={getDataEdit.bornyear.toString()}
+                  error={!!errDate}
+                  helperText="Năm không vượt quá năm hiện tại"
                   onChange={(data) => {
-                    if (data.getFullYear() <= new Date().getFullYear()) {
-                      handleDateChange(data);
-                      setErrDate("");
-                    } else
-                      setErrDate(
-                        <AtomTypography
-                          className={classes.error}
-                          component={"span"}
-                        >
-                          Năm chọn phải nhỏ hơn năm hiện tại
-                        </AtomTypography>
-                      );
+                    isCheckYear(data);
                   }}
                   InputLabelProps={{
                     shrink: true,
                   }}
                 />
-                <AtomTypography>{errDate}</AtomTypography>
               </MuiPickersUtilsProvider>
             </DialogContent>
           </AtomBox>
@@ -326,11 +290,11 @@ export default function FormDialog(props) {
               className={classes.buttonstyle}
               color="primary"
               onClick={() => {
-                if (isClick === "true") {
+                if (isCheckClick === "true") {
                   hanldClickAddRowUser();
-                  setOpenDialogEditUser(!openDialogEditUser);
-                } else handleClickEditRowUser(dataDialogEdit.id);
-                setOpenDialogEditUser(!openDialogEditUser);
+                  setOpenDialogChangeUser(!openDialogChangeUser);
+                } else handleClickEditRowUser(getDataEdit.id);
+                setOpenDialogChangeUser(!openDialogChangeUser);
               }}
             >
               Lưu
@@ -346,7 +310,7 @@ export default function FormDialog(props) {
           )}
           <AtomButton
             className={classes.buttonstyle}
-            onClick={() => setOpenDialogEditUser(!openDialogEditUser)}
+            onClick={() => setOpenDialogChangeUser(!openDialogChangeUser)}
             color="primary"
           >
             Đóng

@@ -63,9 +63,9 @@ export default function TableListUser(props) {
   const [openDialogProfile, setOpenDialogProfile] = useState(false);
   const [dataDialogProfile, setDataDialogProfile] = useState({}); //tạo 1 biến để gan dữ liệu của row khi rander ra
   const [openDialogDelete, setOpenDialogDelete] = useState(false);
-  const [dataDialogDelete, setDataDialogDelete] = useState({});
-  const [dataDialogEdit, setDataDialogEdit] = useState({});
-  const [openDialogEditUser, setOpenDialogEditUser] = useState(false);
+  const [getIdDelete, setGetIdDelete] = useState({});
+  const [getDataEdit, setGetDataEdit] = useState({});
+  const [openDialogChangeUser, setOpenDialogChangeUser] = useState(false);
 
   const handleClickDeleteRows = (data) => {
     const rowNew = filterArr.filter((item) => item.id !== data);
@@ -79,27 +79,25 @@ export default function TableListUser(props) {
     name: "",
     avatar: "",
     bornyear: "",
-    id: dataDialogEdit.id,
+    id: getDataEdit.id,
   };
   const handleClickEditRowUser = (data) => {
     return arr.filter((item) => {
       if (item.id === data) {
         arr[0] = dataEdit;
         setFilterArr(arr);
-        console.log("arr[0]", arr[0]);
-        console.log("arr", arr);
       }
       return setFilterArr(arr);
     });
   };
 
   const handleGetDataDialogEditUser = (data) => {
-    setOpenDialogEditUser(true);
-    setDataDialogEdit(data);
+    setOpenDialogChangeUser(true);
+    setGetDataEdit(data);
   };
-  const handleGetDataDialogDeleteUser = (data) => {
+  const handleGetDataDelete = (data) => {
     setOpenDialogDelete(true);
-    setDataDialogDelete(data);
+    setGetIdDelete(data);
   };
   const handleGetDataDialogProfile = (data) => {
     //KHI CLICK VÀO THÌ BIẾN OPEN SẺ THAY ĐỔI THÀNH TRUE VÀ MỞ DIALOG XEM CHI TIẾT LÊN
@@ -205,7 +203,7 @@ export default function TableListUser(props) {
                               size="small"
                               color="primary"
                               onClick={(data) => {
-                                handleGetDataDialogDeleteUser(user.id);
+                                handleGetDataDelete(user.id);
                                 console.log("id", user.id);
                               }}
                             >
@@ -240,20 +238,20 @@ export default function TableListUser(props) {
       )}
       {openDialogDelete && (
         <DialogDeleteUser
-          dataDialogDelete={dataDialogDelete}
+          getIdDelete={getIdDelete}
           openDialogDelete={openDialogDelete}
           setOpenDialogDelete={setOpenDialogDelete}
           handleClickDeleteRows={handleClickDeleteRows}
         />
       )}
-      {openDialogEditUser && (
+      {openDialogChangeUser && (
         <DialogEditDataUser
-          openDialogEditUser={openDialogEditUser}
-          setOpenDialogEditUser={setOpenDialogEditUser}
-          dataDialogEdit={dataDialogEdit}
+          openDialogChangeUser={openDialogChangeUser}
+          setOpenDialogChangeUser={setOpenDialogChangeUser}
+          getDataEdit={getDataEdit}
           handleClickEditRowUser={handleClickEditRowUser}
           dataEdit={dataEdit}
-          isClick="false"
+          isCheckClick="false"
         />
       )}
     </AtomGrid>

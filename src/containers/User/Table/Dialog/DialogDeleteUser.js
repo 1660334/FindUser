@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DialogDeleteUser(props) {
   const classes = useStyles();
   const {
-    dataDialogDelete,
+    getIdDelete,
     openDialogDelete,
     setOpenDialogDelete,
     handleClickDeleteRows,
@@ -36,7 +36,7 @@ export default function DialogDeleteUser(props) {
           <Button
             className={classes.buttonstyle}
             onClick={() => {
-              handleClickDeleteRows(dataDialogDelete);
+              handleClickDeleteRows(getIdDelete);
               setOpenDialogDelete(!openDialogDelete);
             }}
             color="primary"
