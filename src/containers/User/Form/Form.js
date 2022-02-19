@@ -9,7 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import AtomButton from "../../../Atomic/atoms/AtomButton";
-import DialogEditUser from "../Table/Dialog/DialogDataEdit";
+import DialogEditUser from "../Table/Dialog/DialogChangeData";
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),

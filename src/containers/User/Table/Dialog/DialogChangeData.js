@@ -182,7 +182,6 @@ export default function FormDialog(props) {
                 id="name"
                 label="Họ và tên"
                 required
-                type="text"
                 fullWidth
                 error={!!errName}
                 helperText="Tên không được chứa kí tự, số"
@@ -251,7 +250,6 @@ export default function FormDialog(props) {
                 label="Họ và tên"
                 required
                 placeholder={getDataEdit.name.toString()}
-                type="text"
                 fullWidth
                 error={!!errName}
                 helperText="Tên không được chứa kí tự, số"

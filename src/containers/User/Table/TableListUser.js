@@ -15,7 +15,7 @@ import CardContent from "@material-ui/core/CardContent";
 import dataUser from "../../../database/db.json";
 import TableDialog from "./Dialog/DialogTable";
 import DialogDeleteUser from "./Dialog/DialogDeleteUser";
-import DialogEditDataUser from "./Dialog/DialogDataEdit";
+import DialogEditDataUser from "./Dialog/DialogChangeData";
 
 const useStyles = makeStyles((theme) => ({
   root: { minWidth: "600px" },
