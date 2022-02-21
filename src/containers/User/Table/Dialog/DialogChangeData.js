@@ -67,15 +67,15 @@ export default function FormDialog(props) {
       )
     ) {
       handleDataEdit(data, "name");
-      setErrName("");
-    } else setErrName("false");
+      setErrName(false);
+    } else setErrName(true);
   };
   const isCheckYear = (data) => {
     if (data.getFullYear() <= new Date().getFullYear()) {
       handleDateChange(data);
-      setErrDate("");
+      setErrDate(false);
     } else {
-      setErrDate("false");
+      setErrDate(true);
     }
   };
   const isCheckImgLink = (url) => {
@@ -158,16 +158,16 @@ export default function FormDialog(props) {
                 label="Ảnh đại diện"
                 required
                 fullWidth
-                error={!!errAvatar}
+                error={Boolean(errAvatar)}
                 helperText="Nhập url hình ảnh"
                 onChange={(event, data) => {
                   if (
                     event.target.value !== "" &&
                     !isCheckImgLink(event.target.value)
                   ) {
-                    setErrAvatar("false");
+                    setErrAvatar(true);
                   } else {
-                    setErrAvatar("");
+                    setErrAvatar(false);
                     handleDataEdit(event.target.value, "avatar");
                   }
                 }}
@@ -183,7 +183,7 @@ export default function FormDialog(props) {
                 label="Họ và tên"
                 required
                 fullWidth
-                error={!!errName}
+                error={Boolean(errName)}
                 helperText="Tên không được chứa kí tự, số"
                 onChange={(event, data) => {
                   isCheckName(event.target.value);
@@ -199,7 +199,7 @@ export default function FormDialog(props) {
                   views={["year"]}
                   value={selectedDate}
                   label="Năm sinh"
-                  error={!!errDate}
+                  error={Boolean(errDate)}
                   helperText="Năm không vượt quá năm hiện tại"
                   onChange={(data) => {
                     isCheckYear(data);
@@ -225,16 +225,16 @@ export default function FormDialog(props) {
                 placeholder={getDataEdit.avatar.toString()}
                 required
                 fullWidth
-                error={!!errAvatar}
+                error={Boolean(errAvatar)}
                 helperText="Nhập url hình ảnh"
                 onChange={(event, data) => {
                   if (
                     event.target.value !== "" &&
                     !isCheckImgLink(event.target.value)
                   ) {
-                    setErrAvatar("false");
+                    setErrAvatar(true);
                   } else {
-                    setErrAvatar("");
+                    setErrAvatar(false);
                     handleDataEdit(event.target.value, "avatar");
                   }
                 }}
@@ -251,7 +251,7 @@ export default function FormDialog(props) {
                 required
                 placeholder={getDataEdit.name.toString()}
                 fullWidth
-                error={!!errName}
+                error={Boolean(errName)}
                 helperText="Tên không được chứa kí tự, số"
                 onChange={(event, data) => {
                   isCheckName(event.target.value);
@@ -268,7 +268,7 @@ export default function FormDialog(props) {
                   value={selectedDate}
                   label="Năm sinh"
                   placeholder={getDataEdit.bornyear.toString()}
-                  error={!!errDate}
+                  error={Boolean(errDate)}
                   helperText="Năm không vượt quá năm hiện tại"
                   onChange={(data) => {
                     isCheckYear(data);
