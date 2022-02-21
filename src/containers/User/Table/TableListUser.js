@@ -67,7 +67,7 @@ export default function TableListUser(props) {
   const [getDataEdit, setGetDataEdit] = useState({});
   const [openDialogChangeUser, setOpenDialogChangeUser] = useState(false);
 
-  const handleClickDeleteRows = (data) => {
+  const handleDeleteRowsModelChange = (data) => {
     const rowNew = filterArr.filter((item) => item.id !== data);
 
     setFilterArr(rowNew);
@@ -81,7 +81,7 @@ export default function TableListUser(props) {
     bornyear: "",
     id: getDataEdit.id,
   };
-  const handleClickEditRowUser = (data) => {
+  const handleEditRowsModelChange = (data) => {
     return arr.filter((item) => {
       if (item.id === data) {
         arr[0] = dataEdit;
@@ -91,15 +91,15 @@ export default function TableListUser(props) {
     });
   };
 
-  const handleGetDataDialogEditUser = (data) => {
+  const handleGetDataEditRowsChange = (data) => {
     setOpenDialogChangeUser(true);
     setGetDataEdit(data);
   };
-  const handleGetDataDelete = (data) => {
+  const handleGetDataDeleteRowsChange = (data) => {
     setOpenDialogDelete(true);
     setGetIdDelete(data);
   };
-  const handleGetDataDialogProfile = (data) => {
+  const handleGetDataProfile = (data) => {
     //KHI CLICK VÀO THÌ BIẾN OPEN SẺ THAY ĐỔI THÀNH TRUE VÀ MỞ DIALOG XEM CHI TIẾT LÊN
     setOpenDialogProfile(true);
     setDataDialogProfile(data);
@@ -178,7 +178,7 @@ export default function TableListUser(props) {
                               size="small"
                               color="primary"
                               onClick={() => {
-                                handleGetDataDialogProfile(user);
+                                handleGetDataProfile(user);
                                 console.log("user", user);
                               }}
                             >
@@ -191,7 +191,7 @@ export default function TableListUser(props) {
                               size="small"
                               color="primary"
                               onClick={(data) =>
-                                handleGetDataDialogEditUser(user)
+                                handleGetDataEditRowsChange(user)
                               }
                             >
                               Sửa
@@ -203,7 +203,7 @@ export default function TableListUser(props) {
                               size="small"
                               color="primary"
                               onClick={(data) => {
-                                handleGetDataDelete(user.id);
+                                handleGetDataDeleteRowsChange(user.id);
                                 console.log("id", user.id);
                               }}
                             >
@@ -241,7 +241,7 @@ export default function TableListUser(props) {
           getIdDelete={getIdDelete}
           openDialogDelete={openDialogDelete}
           setOpenDialogDelete={setOpenDialogDelete}
-          handleClickDeleteRows={handleClickDeleteRows}
+          handleDeleteRowsModelChange={handleDeleteRowsModelChange}
         />
       )}
       {openDialogChangeUser && (
@@ -249,7 +249,7 @@ export default function TableListUser(props) {
           openDialogChangeUser={openDialogChangeUser}
           setOpenDialogChangeUser={setOpenDialogChangeUser}
           getDataEdit={getDataEdit}
-          handleClickEditRowUser={handleClickEditRowUser}
+          handleEditRowsModelChange={handleEditRowsModelChange}
           dataEdit={dataEdit}
           isCheckClick="false"
         />
