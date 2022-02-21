@@ -122,7 +122,7 @@ export default function FormDialog(props) {
         dataEdit.name = data;
       }
       //dùng instanceof Date để kiểm tra biến data có phải là 1 Date không!
-      if (data !== "") {
+      if (data !== "" && data instanceof Date) {
         dataEdit.bornyear = data.getFullYear();
       }
       //điều kiện để kiểm tra các dữ liệu đầu vào có rỗng hay không
