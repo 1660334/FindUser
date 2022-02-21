@@ -18,7 +18,7 @@ import DialogDeleteUser from "./Dialog/DialogDeleteUser";
 import DialogEditDataUser from "./Dialog/DialogChangeData";
 
 const useStyles = makeStyles((theme) => ({
-  root: { minWidth: "600px" },
+  root: { maxWidth: "100%" },
 
   table: {
     minWidth: "600px",
