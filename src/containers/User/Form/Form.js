@@ -50,7 +50,7 @@ export default function Form(props) {
     bornyear: "",
     id: arr.length + 1,
   };
-  const hanldClickAddRowUser = () => {
+  const handleAddRowUser = () => {
     if (
       newData.avatar.trim() !== "" &&
       newData.name.trim() !== "" &&
@@ -254,7 +254,7 @@ export default function Form(props) {
         <DialogEditUser
           openDialogChangeUser={openDialogChangeUser}
           setOpenDialogChangeUser={setOpenDialogChangeUser}
-          hanldClickAddRowUser={hanldClickAddRowUser}
+          handleAddRowUser={handleAddRowUser}
           newData={newData}
           isCheckClick="true"
         />

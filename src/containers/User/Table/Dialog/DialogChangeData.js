@@ -42,7 +42,7 @@ export default function FormDialog(props) {
     setOpenDialogChangeUser,
     getDataEdit,
     handleClickEditRowUser,
-    hanldClickAddRowUser,
+    handleAddRowUser,
     dataEdit,
     newData,
     isCheckClick,
@@ -289,7 +289,7 @@ export default function FormDialog(props) {
               color="primary"
               onClick={() => {
                 if (isCheckClick === "true") {
-                  hanldClickAddRowUser();
+                  handleAddRowUser();
                   setOpenDialogChangeUser(!openDialogChangeUser);
                 } else handleClickEditRowUser(getDataEdit.id);
                 setOpenDialogChangeUser(!openDialogChangeUser);
