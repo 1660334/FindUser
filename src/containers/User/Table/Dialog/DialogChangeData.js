@@ -60,8 +60,10 @@ export default function FormDialog(props) {
     handleDataEdit(data);
     console.log("date", data);
   };
+
   const isCheckName = (data) => {
     if (
+      //eslint-disable-next-line
       !/\d|!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g.test(
         data
       )
@@ -83,6 +85,7 @@ export default function FormDialog(props) {
       return false;
     }
     return (
+      //eslint-disable-next-line
       url.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) !== null
     );
   };
@@ -159,7 +162,7 @@ export default function FormDialog(props) {
                 required
                 fullWidth
                 error={Boolean(errAvatar)}
-                helperText="Nhập url hình ảnh"
+                helperText={errAvatar ? "Không phải là đường dẩn hình ảnh" : ""}
                 onChange={(event, data) => {
                   if (
                     event.target.value !== "" &&
@@ -184,7 +187,7 @@ export default function FormDialog(props) {
                 required
                 fullWidth
                 error={Boolean(errName)}
-                helperText="Tên không được chứa kí tự, số"
+                helperText={errName ? "Tên không được chứa kí tự, số" : ""}
                 onChange={(event, data) => {
                   isCheckName(event.target.value);
                 }}
@@ -200,7 +203,9 @@ export default function FormDialog(props) {
                   value={selectedDate}
                   label="Năm sinh"
                   error={Boolean(errDate)}
-                  helperText="Năm không vượt quá năm hiện tại"
+                  helperText={
+                    errDate ? "Năm sinh không được quá năm hiện tại" : ""
+                  }
                   onChange={(data) => {
                     isCheckYear(data);
                   }}
@@ -252,7 +257,7 @@ export default function FormDialog(props) {
                 placeholder={getDataEdit.name.toString()}
                 fullWidth
                 error={Boolean(errName)}
-                helperText="Tên không được chứa kí tự, số"
+                helperText={errName ? "Tên không được chứa kí tự, số" : ""}
                 onChange={(event, data) => {
                   isCheckName(event.target.value);
                 }}
@@ -269,7 +274,9 @@ export default function FormDialog(props) {
                   label="Năm sinh"
                   placeholder={getDataEdit.bornyear.toString()}
                   error={Boolean(errDate)}
-                  helperText="Năm không vượt quá năm hiện tại"
+                  helperText={
+                    errDate ? "Năm sinh không được quá năm hiện tại" : ""
+                  }
                   onChange={(data) => {
                     isCheckYear(data);
                   }}

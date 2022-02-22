@@ -105,8 +105,6 @@ export default function TableListUser(props) {
     setDataDialogProfile(data);
   };
 
-  //hàm thêm 1 object data vào table sau khi click lưu
-
   return (
     <AtomGrid container>
       <AtomGrid item xs={12}>
