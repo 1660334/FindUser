@@ -231,7 +231,7 @@ export default function FormDialog(props) {
                 required
                 fullWidth
                 error={Boolean(errAvatar)}
-                helperText="Nhập url hình ảnh"
+                helperText={errAvatar ? "Không phải là đường dẩn hình ảnh" : ""}
                 onChange={(event, data) => {
                   if (
                     event.target.value !== "" &&
