@@ -116,7 +116,7 @@ export default function TableListUser(props) {
             </AtomTypography>
 
             <Card>
-              <TableContainer className={classes.root}>
+              <TableContainer className={classes.root} overflow="auto">
                 <Table
                   size="small"
                   aria-label="a dense table"
