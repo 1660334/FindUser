@@ -128,9 +128,7 @@ export default function TableListUser(props) {
                       <TableCell className={classes.widthTableCell}>
                         Ảnh đại diện
                       </TableCell>
-                      <TableCell className={classes.widthTableCellname}>
-                        Họ và tên
-                      </TableCell>
+                      <TableCell>Họ và tên</TableCell>
                       <TableCell
                         className={classes.widthTableCell}
                         align="center"
@@ -160,9 +158,7 @@ export default function TableListUser(props) {
                               src={user.avatar}
                             />
                           </TableCell>
-                          <TableCell className={classes.widthTableCellname}>
-                            {user.name}
-                          </TableCell>
+                          <TableCell>{user.name}</TableCell>
                           <TableCell
                             className={classes.widthTableCell}
                             align="center"

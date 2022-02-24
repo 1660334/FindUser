@@ -296,8 +296,10 @@ export default function FormDialog(props) {
               color="primary"
               onClick={() => {
                 if (isCheckClick === "true") {
-                  handleAddRowsModelChange();
-                  setOpenDialogChangeUser(!openDialogChangeUser);
+                  //dùng hàm setTimeout để cài đặt thời gian hàm handleAddRowsModelChange và thời gian để thực thi khi ta click (tính bằng milisecons)
+                  //
+                  setTimeout(handleAddRowsModelChange, 0);
+                  // handleAddRowsModelChange();
                 } else handleEditRowsModelChange(getDataEdit.id);
                 setOpenDialogChangeUser(!openDialogChangeUser);
               }}

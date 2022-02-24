@@ -50,6 +50,7 @@ export default function Form(props) {
     bornyear: "",
     id: arr.length + 1,
   };
+
   const handleAddRowsModelChange = () => {
     if (
       newData.avatar.trim() !== "" &&
@@ -175,7 +176,6 @@ export default function Form(props) {
                       <AtomTextField
                         fullWidth
                         className={classes.muipicker}
-                        id="fullName"
                         type="text"
                         label="Tìm kiếm người dùng"
                         variant="outlined"
