@@ -67,7 +67,7 @@ export default function TableListUser(props) {
   const [getDataEdit, setGetDataEdit] = useState({});
   const [openDialogChangeUser, setOpenDialogChangeUser] = useState(false);
 
-  const handleDeleteRowsModelChange = (data) => {
+  const handleDeleteRowsModel = (data) => {
     const rowNew = filterArr.filter((item) => item.id !== data);
 
     setFilterArr(rowNew);
@@ -91,11 +91,11 @@ export default function TableListUser(props) {
     });
   };
 
-  const handleGetDataEditRowsChange = (data) => {
+  const handleGetDataEditRows = (data) => {
     setOpenDialogChangeUser(true);
     setGetDataEdit(data);
   };
-  const handleGetDataDeleteRowsChange = (data) => {
+  const handleGetDataDeleteRows = (data) => {
     setOpenDialogDelete(true);
     setGetIdDelete(data);
   };
@@ -149,22 +149,15 @@ export default function TableListUser(props) {
                     {filterArr.length > 0 ? (
                       filterArr.map((user) => (
                         <TableRow key={user.id}>
-                          <TableCell className={classes.widthId}>
-                            {user.id}
-                          </TableCell>
-                          <TableCell className={classes.widthTableCell}>
+                          <TableCell>{user.id}</TableCell>
+                          <TableCell>
                             <Avatar
                               className={classes.marginAvt}
                               src={user.avatar}
                             />
                           </TableCell>
                           <TableCell>{user.name}</TableCell>
-                          <TableCell
-                            className={classes.widthTableCell}
-                            align="center"
-                          >
-                            {user.bornyear}
-                          </TableCell>
+                          <TableCell align="center">{user.bornyear}</TableCell>
                           <TableCell align="right">
                             <AtomButton
                               className={classes.button}
@@ -185,7 +178,7 @@ export default function TableListUser(props) {
                               size="small"
                               color="primary"
                               onClick={(data) =>
-                                handleGetDataEditRowsChange(user)
+                                handleGetDataEditRows(user)
                               }
                             >
                               Sửa
@@ -197,7 +190,7 @@ export default function TableListUser(props) {
                               size="small"
                               color="primary"
                               onClick={(data) => {
-                                handleGetDataDeleteRowsChange(user.id);
+                                handleGetDataDeleteRows(user.id);
                                 console.log("id", user.id);
                               }}
                             >
@@ -235,7 +228,7 @@ export default function TableListUser(props) {
           getIdDelete={getIdDelete}
           openDialogDelete={openDialogDelete}
           setOpenDialogDelete={setOpenDialogDelete}
-          handleDeleteRowsModelChange={handleDeleteRowsModelChange}
+          handleDeleteRowsModel={handleDeleteRowsModel}
         />
       )}
       {openDialogChangeUser && (

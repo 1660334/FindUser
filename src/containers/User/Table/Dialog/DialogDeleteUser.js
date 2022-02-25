@@ -16,7 +16,7 @@ export default function DialogDeleteUser(props) {
     getIdDelete,
     openDialogDelete,
     setOpenDialogDelete,
-    handleDeleteRowsModelChange,
+    handleDeleteRowsModel,
   } = props;
 
   return (
@@ -36,7 +36,7 @@ export default function DialogDeleteUser(props) {
           <Button
             className={classes.buttonstyle}
             onClick={() => {
-              handleDeleteRowsModelChange(getIdDelete);
+              handleDeleteRowsModel(getIdDelete);
               setOpenDialogDelete(!openDialogDelete);
             }}
             color="primary"

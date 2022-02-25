@@ -176,7 +176,6 @@ export default function Form(props) {
                       <AtomTextField
                         fullWidth
                         className={classes.muipicker}
-                        type="text"
                         label="Tìm kiếm người dùng"
                         variant="outlined"
                         placeholder="Nhập họ tên / ID / Năm sinh"
