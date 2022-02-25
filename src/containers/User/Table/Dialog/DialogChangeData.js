@@ -71,14 +71,16 @@ export default function FormDialog(props) {
       handleDataEdit(data, "name");
       setErrName(false);
     } else setErrName(true);
-    //cách bên dưới không báo lỗi khi nhập chuổi trước rồi nhập số và kí tự sau
-    //   var changeData = data
+
+    //cách bên dưới không báo lỗi khi nhập chuỗi sau đó nhập số hoặc kí tự đặt biệt vd: luan2134@@@@<>?
+
+    //   let changeData = data
     //   .normalize("NFD")
     //   .replace(/[\u0300-\u036f]/g, "")
     //   .replace(/đ/g, "d")
     //   .replace(/Đ/g, "D");
     // console.log("changeData", changeData);
-    // if (!/[a-zA-Z]/g.test(changeData) && changeData !== "") {
+    // if (/[a-zA-Z]+/g.test(changeData) && changeData !== "") {
     //   setErrName(true);
     // } else {
     //   handleDataEdit(data, "name");
