@@ -54,7 +54,7 @@ export default function FormDialog(props) {
   const [isFullData, setIsFullData] = useState(false);
   const [errAvatar, setErrAvatar] = useState(null);
   const [errDate, setErrDate] = useState(null);
-  const [errName, setErrName] = useState(null);
+  const [errName, setErrName] = useState(false);
   const handleDateChange = (data) => {
     setSelectedDate(data);
     handleDataEdit(data);
@@ -62,14 +62,14 @@ export default function FormDialog(props) {
   };
 
   const isCheckName = (data) => {
-    if (
-      //eslint-disable-next-line
-      !/\d|!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g.test(
-        data
-      )
-    ) {
+    var changeData = data
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/đ/g, "d")
+      .replace(/Đ/g, "D");
+    console.log("changeData", changeData);
+    if (/[a-zA-Z]/g.test(changeData)) {
       handleDataEdit(data, "name");
-      setErrName(false);
     } else setErrName(true);
   };
   const isCheckYear = (data) => {
