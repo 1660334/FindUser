@@ -68,9 +68,12 @@ export default function FormDialog(props) {
       .replace(/đ/g, "d")
       .replace(/Đ/g, "D");
     console.log("changeData", changeData);
-    if (/[a-zA-Z]/g.test(changeData)) {
+    if (!/[a-zA-Z]/g.test(changeData) && changeData !== "") {
+      setErrName(true);
+    } else {
       handleDataEdit(data, "name");
-    } else setErrName(true);
+      setErrName(false);
+    }
   };
   const isCheckYear = (data) => {
     if (data.getFullYear() <= new Date().getFullYear()) {
