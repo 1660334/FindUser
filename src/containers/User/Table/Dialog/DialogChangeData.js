@@ -62,30 +62,27 @@ export default function FormDialog(props) {
   };
 
   const isCheckName = (data) => {
-    if (
-      //eslint-disable-next-line
-      !/\d|!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g.test(
-        data
-      )
-    ) {
-      handleDataEdit(data, "name");
-      setErrName(false);
-    } else setErrName(true);
-
-    //cách bên dưới không báo lỗi khi nhập chuỗi sau đó nhập số hoặc kí tự đặt biệt vd: luan2134@@@@<>?
-
-    //   let changeData = data
-    //   .normalize("NFD")
-    //   .replace(/[\u0300-\u036f]/g, "")
-    //   .replace(/đ/g, "d")
-    //   .replace(/Đ/g, "D");
-    // console.log("changeData", changeData);
-    // if (/[a-zA-Z]+/g.test(changeData) && changeData !== "") {
-    //   setErrName(true);
-    // } else {
+    // if (
+    //   //eslint-disable-next-line
+    //   !/\d|!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g.test(
+    //     data
+    //   )
+    // ) {
     //   handleDataEdit(data, "name");
     //   setErrName(false);
-    // }
+    // } else setErrName(true);
+
+    //eslint-disable-next-line
+    var format = /[0-9]|[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+
+    if (!format.test(data)) {
+      handleDataEdit(data, "name");
+      setErrName(false);
+      console.log("datacheckname", data);
+    } else {
+      setIsFullData(false);
+      setErrName(true);
+    }
   };
   const isCheckYear = (data) => {
     if (data.getFullYear() <= new Date().getFullYear()) {
@@ -93,6 +90,7 @@ export default function FormDialog(props) {
       setErrDate(false);
     } else {
       setErrDate(true);
+      setIsFullData(false);
     }
   };
   const isCheckImgLink = (url) => {
@@ -106,7 +104,6 @@ export default function FormDialog(props) {
   };
   const handleDataEdit = (data, type) => {
     if (isCheckClick === "true") {
-      console.log("date", data);
       if (data !== "" && type === "avatar") {
         console.log("data", data);
         newData.avatar = data;
@@ -115,11 +112,13 @@ export default function FormDialog(props) {
         console.log("data", data);
         newData.name = data;
       }
+
       //dùng instanceof Date để kiểm tra biến data có phải là 1 Date không!
       if (data !== "" && data instanceof Date) {
         newData.bornyear = data.getFullYear();
       }
       //điều kiện để kiểm tra các dữ liệu đầu vào có rỗng hay không
+
       if (
         newData.avatar !== "" &&
         isCheckImgLink(newData.avatar) &&
@@ -127,9 +126,9 @@ export default function FormDialog(props) {
         newData.bornyear !== "" &&
         newData.bornyear <= new Date().getFullYear()
       )
-        //nếu không rỗng thì thoả điều kiện và hàm setFullData sẻ được thay đổi thành true
         setIsFullData(true);
       else setIsFullData(false);
+
       //ngược lại thì là false
     } else {
       console.log("date", data);
@@ -151,7 +150,6 @@ export default function FormDialog(props) {
         dataEdit.bornyear !== "" &&
         dataEdit.bornyear <= new Date().getFullYear()
       )
-        //nếu không rỗng thì thoả điều kiện và hàm setFullData sẻ được thay đổi thành true
         setIsFullData(true);
       else setIsFullData(false);
     }
