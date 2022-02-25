@@ -54,7 +54,7 @@ export default function FormDialog(props) {
   const [isFullData, setIsFullData] = useState(false);
   const [errAvatar, setErrAvatar] = useState(null);
   const [errDate, setErrDate] = useState(null);
-  const [errName, setErrName] = useState(false);
+  const [errName, setErrName] = useState(null);
   const handleDateChange = (data) => {
     setSelectedDate(data);
     handleDataEdit(data);
@@ -62,18 +62,28 @@ export default function FormDialog(props) {
   };
 
   const isCheckName = (data) => {
-    var changeData = data
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/đ/g, "d")
-      .replace(/Đ/g, "D");
-    console.log("changeData", changeData);
-    if (!/[a-zA-Z]/g.test(changeData) && changeData !== "") {
-      setErrName(true);
-    } else {
+    if (
+      //eslint-disable-next-line
+      !/\d|!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g.test(
+        data
+      )
+    ) {
       handleDataEdit(data, "name");
       setErrName(false);
-    }
+    } else setErrName(true);
+    //cách bên dưới không báo lỗi khi nhập chuổi trước rồi nhập số và kí tự sau
+    //   var changeData = data
+    //   .normalize("NFD")
+    //   .replace(/[\u0300-\u036f]/g, "")
+    //   .replace(/đ/g, "d")
+    //   .replace(/Đ/g, "D");
+    // console.log("changeData", changeData);
+    // if (!/[a-zA-Z]/g.test(changeData) && changeData !== "") {
+    //   setErrName(true);
+    // } else {
+    //   handleDataEdit(data, "name");
+    //   setErrName(false);
+    // }
   };
   const isCheckYear = (data) => {
     if (data.getFullYear() <= new Date().getFullYear()) {
