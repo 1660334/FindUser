@@ -16,6 +16,7 @@ import dataUser from "../../../database/db.json";
 import TableDialog from "./Dialog/DialogTable";
 import DialogDeleteUser from "./Dialog/DialogDeleteUser";
 import DialogEditDataUser from "./Dialog/DialogChangeData";
+import AtomBox from "../../../Atomic/atoms/AtomBox";
 
 const useStyles = makeStyles((theme) => ({
   root: { maxWidth: "100%" },
@@ -49,6 +50,10 @@ const useStyles = makeStyles((theme) => ({
     height: 50,
     textTransform: "none",
   },
+  alertNoData: {
+    width: "85%",
+    position: "absolute",
+  },
 }));
 export default function TableListUser(props) {
   const { arr, setArr, filterArr, setFilterArr } = props;
@@ -59,9 +64,9 @@ export default function TableListUser(props) {
     setFilterArr(dataUser);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  //tạo 1 state để mở và đóng dialog
+  //các state để mở và đóng dialog và lưu dữ liệu vào
   const [openDialogProfile, setOpenDialogProfile] = useState(false);
-  const [dataDialogProfile, setDataDialogProfile] = useState({}); //tạo 1 biến để gan dữ liệu của row khi rander ra
+  const [dataDialogProfile, setDataDialogProfile] = useState({});
   const [openDialogDelete, setOpenDialogDelete] = useState(false);
   const [getIdDelete, setGetIdDelete] = useState({});
   const [getDataEdit, setGetDataEdit] = useState({});
@@ -81,6 +86,7 @@ export default function TableListUser(props) {
     bornyear: "",
     id: getDataEdit.id,
   };
+  //hàm handleEditRowsModelChange xử lý sự kiện click Lưu và trả về kết quả
   const handleEditRowsModelChange = (data) => {
     return arr.filter((item) => {
       if (item.id === data) {
@@ -99,8 +105,8 @@ export default function TableListUser(props) {
     setOpenDialogDelete(true);
     setGetIdDelete(data);
   };
+  //hàm handleGetDataProfile xử lý sự kiện click buttom xemchitiet mở dialog và truyền data vào hàm setDataDialogProfile
   const handleGetDataProfile = (data) => {
-    //KHI CLICK VÀO THÌ BIẾN OPEN SẺ THAY ĐỔI THÀNH TRUE VÀ MỞ DIALOG XEM CHI TIẾT LÊN
     setOpenDialogProfile(true);
     setDataDialogProfile(data);
   };
@@ -165,7 +171,7 @@ export default function TableListUser(props) {
                               size="small"
                               color="primary"
                               onClick={() => {
-                                handleGetDataProfile(user);
+                                handleGetDataProfile(user); //truyền data user vào hàm handleGetDataProfile khi ta click
                                 console.log("user", user);
                               }}
                             >
@@ -177,9 +183,7 @@ export default function TableListUser(props) {
                               className={classes.button}
                               size="small"
                               color="primary"
-                              onClick={(data) =>
-                                handleGetDataEditRows(user)
-                              }
+                              onClick={(data) => handleGetDataEditRows(user)} //truyền data user vào hàm handleGetDataEditRows khi ta click
                             >
                               Sửa
                             </AtomButton>
@@ -190,7 +194,7 @@ export default function TableListUser(props) {
                               size="small"
                               color="primary"
                               onClick={(data) => {
-                                handleGetDataDeleteRows(user.id);
+                                handleGetDataDeleteRows(user.id); //truyền data user.id vào hàm handleGetDataDeleteRows khi ta click
                                 console.log("id", user.id);
                               }}
                             >
@@ -200,13 +204,12 @@ export default function TableListUser(props) {
                         </TableRow>
                       ))
                     ) : (
-                      <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell align="center">
-                          Không tìm thấy dữ liệu tìm kiếm
-                        </TableCell>
-                      </TableRow>
+                      <AtomTypography
+                        className={classes.alertNoData}
+                        align="center"
+                      >
+                        Không tìm thấy dữ liệu tìm kiếm
+                      </AtomTypography>
                     )}
                   </TableBody>
                 </Table>
