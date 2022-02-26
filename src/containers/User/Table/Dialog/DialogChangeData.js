@@ -182,6 +182,7 @@ export default function FormDialog(props) {
                     !isCheckImgLink(event.target.value)
                   ) {
                     setErrAvatar(true);
+                    setIsFullData(false);
                   } else {
                     setErrAvatar(false);
                     handleDataEdit(event.target.value, "avatar");
@@ -251,6 +252,7 @@ export default function FormDialog(props) {
                     !isCheckImgLink(event.target.value)
                   ) {
                     setErrAvatar(true);
+                    setIsFullData(false);
                   } else {
                     setErrAvatar(false);
                     handleDataEdit(event.target.value, "avatar");
