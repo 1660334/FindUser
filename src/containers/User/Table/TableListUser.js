@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
   },
   alertNoData: {
-    width: "85%",
+    width: "84%",
     position: "absolute",
   },
 }));
@@ -192,7 +192,7 @@ export default function TableListUser(props) {
                             <AtomButton
                               className={classes.button}
                               size="small"
-                              color="primary"
+                              color="secondary"
                               onClick={(data) => {
                                 handleGetDataDeleteRows(user.id); //truyền data user.id vào hàm handleGetDataDeleteRows khi ta click
                                 console.log("id", user.id);
@@ -204,12 +204,14 @@ export default function TableListUser(props) {
                         </TableRow>
                       ))
                     ) : (
-                      <AtomTypography
-                        className={classes.alertNoData}
-                        align="center"
-                      >
-                        Không tìm thấy dữ liệu tìm kiếm
-                      </AtomTypography>
+                      <TableRow>
+                        <TableCell
+                          className={classes.alertNoData}
+                          align="center"
+                        >
+                          Không tìm thấy dữ liệu tìm kiếm
+                        </TableCell>
+                      </TableRow>
                     )}
                   </TableBody>
                 </Table>
