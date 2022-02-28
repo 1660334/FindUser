@@ -49,7 +49,7 @@ export default function DialogDeleteUser(props) {
             color="primary"
             autoFocus
           >
-            không
+            Không
           </Button>
         </DialogActions>
       </Dialog>

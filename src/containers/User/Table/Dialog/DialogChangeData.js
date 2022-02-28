@@ -9,10 +9,10 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AtomButton from "../../../../Atomic/atoms/AtomButton";
 import AtomBox from "../../../../Atomic/atoms/AtomBox";
+import { format } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   widthDialog: {
-    width: "400px",
     margin: "auto",
     height: "100%",
     padding: theme.spacing(3),
@@ -50,13 +50,19 @@ export default function FormDialog(props) {
   const classes = useStyles();
   //bắt buộc phải khai báo useState khi ta muốn dữ liêuj tự động rander khi ta nhập
 
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(
+    isCheckClick === "false"
+      ? format(
+          new Date(getDataEdit.bornyear, 0, 1),
+          "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
+        )
+      : null
+  );
   const [isFullData, setIsFullData] = useState(false);
   const [errAvatar, setErrAvatar] = useState(null);
   const [errDate, setErrDate] = useState(null);
   const [errName, setErrName] = useState(null);
   const handleDateChange = (data) => {
-    setSelectedDate(data);
     handleDataEdit(data);
     console.log("date", data);
   };
@@ -76,6 +82,7 @@ export default function FormDialog(props) {
     }
   };
   const handleCheckYear = (data) => {
+    setSelectedDate(data);
     if (data.getFullYear() <= new Date().getFullYear()) {
       handleDateChange(data);
       setErrDate(false);
@@ -178,15 +185,12 @@ export default function FormDialog(props) {
                     handleDataEdit(event.target.value, "avatar");
                   }
                 }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
               />
 
               <TextField
                 className={classes.muiTextField}
-                margin="dense"
                 id="name"
+                type="text"
                 label="Họ và tên"
                 required
                 fullWidth
@@ -194,9 +198,6 @@ export default function FormDialog(props) {
                 helperText={errName ? "Tên không được chứa kí tự, số" : ""}
                 onChange={(event, data) => {
                   handleCheckName(event.target.value);
-                }}
-                InputLabelProps={{
-                  shrink: true,
                 }}
               />
 
@@ -213,9 +214,6 @@ export default function FormDialog(props) {
                   onChange={(data) => {
                     handleCheckYear(data);
                   }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
                 />
               </MuiPickersUtilsProvider>
             </DialogContent>
@@ -231,7 +229,7 @@ export default function FormDialog(props) {
                 className={classes.muiTextField}
                 margin="dense"
                 label="Ảnh đại diện"
-                placeholder={getDataEdit.avatar.toString()}
+                defaultValue={getDataEdit.avatar.toString()}
                 required
                 fullWidth
                 error={Boolean(errAvatar)}
@@ -250,45 +248,35 @@ export default function FormDialog(props) {
                     handleDataEdit(event.target.value, "avatar");
                   }
                 }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
               />
-
               <TextField
                 className={classes.muiTextField}
                 margin="dense"
                 id="name"
                 label="Họ và tên"
+                type="text"
                 required
-                placeholder={getDataEdit.name.toString()}
+                defaultValue={getDataEdit.name.toString()}
                 fullWidth
                 error={Boolean(errName)}
                 helperText={errName ? "Tên không được chứa kí tự, số" : ""}
                 onChange={(event, data) => {
                   handleCheckName(event.target.value);
                 }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
               />
-
+              {console.log("getDataEdit.bornyear", typeof getDataEdit.bornyear)}
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                   className={classes.datePicker}
                   views={["year"]}
                   value={selectedDate}
                   label="Năm sinh"
-                  placeholder={getDataEdit.bornyear.toString()}
                   error={Boolean(errDate)}
                   helperText={
                     errDate ? "Năm sinh không được quá năm hiện tại" : ""
                   }
                   onChange={(data) => {
                     handleCheckYear(data);
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
                   }}
                 />
               </MuiPickersUtilsProvider>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { InputLabel, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import InputLabel from "@material-ui/core/InputLabel";
 import AtomTypography from "../../../Atomic/atoms/AtomTypography";
 import AtomTextField from "../../../Atomic/atoms/AtomTextField";
 import AtomBox from "../../../Atomic/atoms/AtomBox";
@@ -13,6 +14,11 @@ import DialogEditUser from "../Table/Dialog/DialogChangeData";
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
+    padding: theme.spacing(0),
+  },
+  selectyear: {
+    margin: theme.spacing(1),
+
     padding: theme.spacing(0),
   },
   muipicker: {
@@ -32,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     paddingBottom: theme.spacing(2),
     fontWeight: "bold",
+  },
+  labelInput: {
+    display: "block",
   },
 }));
 
@@ -144,7 +153,7 @@ export default function Form(props) {
 
   return (
     <AtomBox>
-      <AtomGrid container>
+      <AtomGrid container spacing={2}>
         <AtomGrid item xs={12}>
           <AtomTypography
             component={"span"}
@@ -153,6 +162,8 @@ export default function Form(props) {
           >
             Quản lý người dùng!
           </AtomTypography>
+        </AtomGrid>
+        <AtomGrid item xs={12}>
           <AtomTypography align="right">
             <AtomButton
               variant="outlined"
@@ -165,14 +176,13 @@ export default function Form(props) {
             </AtomButton>
           </AtomTypography>
         </AtomGrid>
-
         <AtomGrid item xs={12}>
           <Paper elevation={1}>
             <AtomGrid container>
               <AtomGrid item xs={12}>
                 <form className={classes.root}>
                   <AtomGrid container spacing={2}>
-                    <AtomGrid item xs={5}>
+                    <AtomGrid item xs={12} sm={5}>
                       <AtomTextField
                         fullWidth
                         className={classes.muipicker}
@@ -188,18 +198,13 @@ export default function Form(props) {
                         }}
                       />
                     </AtomGrid>
-                    <AtomGrid item xs={3}>
+                    <AtomGrid item xs={12} sm={3}>
                       {/* //điều kiện kiểm tra textSearch có phải là 1 number và là 1 năm hay không nếu thoả điều kiện thì hiện select tìm kiếm year  */}
                       {(textSearch.length === 4 &&
                         !isNaN(Number(textSearch))) ||
                       false ? (
-                        <FormControl className={classes.root} fullWidth>
-                          <InputLabel
-                            shrink
-                            id="demo-simple-select-placeholder-label-label"
-                          >
-                            Select Year Search
-                          </InputLabel>
+                        <FormControl className={classes.selectyear} fullWidth>
+                          <InputLabel>Select Year Search</InputLabel>
                           <Select
                             autoWidth
                             className={classes.borderRadius}
@@ -208,9 +213,6 @@ export default function Form(props) {
                             inputProps={{ "aria-label": "Without label" }}
                             displayEmpty
                           >
-                            <MenuItem value="">
-                              <em>None</em>
-                            </MenuItem>
                             <MenuItem value="bigger">bigger</MenuItem>
                             <MenuItem value="lesser"> lesser</MenuItem>
                             <MenuItem value="equal"> equal</MenuItem>
@@ -223,6 +225,7 @@ export default function Form(props) {
                           disabled
                         >
                           <InputLabel
+                            className={classes.labelInput}
                             shrink
                             id="demo-simple-select-placeholder-label-label"
                           >

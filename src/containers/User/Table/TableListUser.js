@@ -16,7 +16,9 @@ import dataUser from "../../../database/db.json";
 import TableDialog from "./Dialog/DialogTable";
 import DialogDeleteUser from "./Dialog/DialogDeleteUser";
 import DialogEditDataUser from "./Dialog/DialogChangeData";
-import AtomBox from "../../../Atomic/atoms/AtomBox";
+
+import Hidden from "@material-ui/core/Hidden";
+import ListCard from "./Card/CardTable";
 
 const useStyles = makeStyles((theme) => ({
   root: { maxWidth: "100%" },
@@ -51,8 +53,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
   },
   alertNoData: {
-    width: "84%",
-    position: "absolute",
+    width: "40%",
   },
 }));
 export default function TableListUser(props) {
@@ -120,103 +121,113 @@ export default function TableListUser(props) {
               {" "}
               <b>Danh sách người dùng</b>
             </AtomTypography>
+            <Hidden only={["sm", "md", "lg", "xl"]}>
+              {" "}
+              <ListCard
+                filterArr={filterArr}
+                handleGetDataEditRows={handleGetDataEditRows}
+                handleGetDataProfile={handleGetDataProfile}
+                handleGetDataDeleteRows={handleGetDataDeleteRows}
+              />
+            </Hidden>
 
-            <Card>
-              <TableContainer className={classes.root} overflow="auto">
-                <Table
-                  size="small"
-                  aria-label="a dense table"
-                  className={classes.table}
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell className={classes.widthId}>ID</TableCell>
-                      <TableCell className={classes.widthTableCell}>
-                        Ảnh đại diện
-                      </TableCell>
-                      <TableCell>Họ và tên</TableCell>
-                      <TableCell
-                        className={classes.widthTableCell}
-                        align="center"
-                      >
-                        Năm sinh
-                      </TableCell>
-                      <TableCell align="right"></TableCell>
-                      <TableCell
-                        align="right"
-                        className={classes.widthTableCellbutton}
-                      ></TableCell>
-                      <TableCell
-                        className={classes.widthTableCellbutton}
-                      ></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {filterArr.length > 0 ? (
-                      filterArr.map((user) => (
-                        <TableRow key={user.id}>
-                          <TableCell>{user.id}</TableCell>
-                          <TableCell>
-                            <Avatar
-                              className={classes.marginAvt}
-                              src={user.avatar}
-                            />
-                          </TableCell>
-                          <TableCell>{user.name}</TableCell>
-                          <TableCell align="center">{user.bornyear}</TableCell>
-                          <TableCell align="right">
-                            <AtomButton
-                              className={classes.button}
-                              component={"span"}
-                              size="small"
-                              color="primary"
-                              onClick={() => {
-                                handleGetDataProfile(user); //truyền data user vào hàm handleGetDataProfile khi ta click
-                                console.log("user", user);
-                              }}
-                            >
-                              Xem chi tiết
-                            </AtomButton>
-                          </TableCell>
-                          <TableCell>
-                            <AtomButton
-                              className={classes.button}
-                              size="small"
-                              color="primary"
-                              onClick={(data) => handleGetDataEditRows(user)} //truyền data user vào hàm handleGetDataEditRows khi ta click
-                            >
-                              Sửa
-                            </AtomButton>
-                          </TableCell>
-                          <TableCell>
-                            <AtomButton
-                              className={classes.button}
-                              size="small"
-                              color="secondary"
-                              onClick={(data) => {
-                                handleGetDataDeleteRows(user.id); //truyền data user.id vào hàm handleGetDataDeleteRows khi ta click
-                                console.log("id", user.id);
-                              }}
-                            >
-                              Xoá
-                            </AtomButton>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    ) : (
+            <Hidden xsDown>
+              <Card>
+                <TableContainer className={classes.root} overflow="auto">
+                  <Table
+                    size="small"
+                    aria-label="a dense table"
+                    className={classes.table}
+                  >
+                    <TableHead>
                       <TableRow>
+                        <TableCell className={classes.widthId}>ID</TableCell>
+                        <TableCell className={classes.widthTableCell}>
+                          Ảnh đại diện
+                        </TableCell>
+                        <TableCell>Họ và tên</TableCell>
                         <TableCell
-                          className={classes.alertNoData}
+                          className={classes.widthTableCell}
                           align="center"
                         >
-                          Không tìm thấy dữ liệu tìm kiếm
+                          Năm sinh
                         </TableCell>
+                        <TableCell align="right"></TableCell>
+                        <TableCell
+                          align="right"
+                          className={classes.widthTableCellbutton}
+                        ></TableCell>
+                        <TableCell
+                          className={classes.widthTableCellbutton}
+                        ></TableCell>
                       </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Card>
+                    </TableHead>
+                    <TableBody>
+                      {filterArr.length > 0 ? (
+                        filterArr.map((user) => (
+                          <TableRow key={user.id}>
+                            <TableCell>{user.id}</TableCell>
+                            <TableCell>
+                              <Avatar
+                                className={classes.marginAvt}
+                                src={user.avatar}
+                              />
+                            </TableCell>
+                            <TableCell>{user.name}</TableCell>
+                            <TableCell align="center">
+                              {user.bornyear}
+                            </TableCell>
+                            <TableCell align="right">
+                              <AtomButton
+                                className={classes.button}
+                                component={"span"}
+                                size="small"
+                                color="primary"
+                                onClick={() => {
+                                  handleGetDataProfile(user); //truyền data user vào hàm handleGetDataProfile khi ta click
+                                  console.log("user", user);
+                                }}
+                              >
+                                Xem chi tiết
+                              </AtomButton>
+                            </TableCell>
+                            <TableCell>
+                              <AtomButton
+                                className={classes.button}
+                                size="small"
+                                color="primary"
+                                onClick={(data) => handleGetDataEditRows(user)} //truyền data user vào hàm handleGetDataEditRows khi ta click
+                              >
+                                Sửa
+                              </AtomButton>
+                            </TableCell>
+                            <TableCell>
+                              <AtomButton
+                                className={classes.button}
+                                size="small"
+                                color="secondary"
+                                onClick={(data) => {
+                                  handleGetDataDeleteRows(user.id); //truyền data user.id vào hàm handleGetDataDeleteRows khi ta click
+                                  console.log("id", user.id);
+                                }}
+                              >
+                                Xoá
+                              </AtomButton>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={3} align="right">
+                            Không tìm thấy dữ liệu tìm kiếm
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Card>
+            </Hidden>
           </CardContent>
         </Card>
       </AtomGrid>
