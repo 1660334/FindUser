@@ -1,14 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import AtomTypography from "../../../../Atomic/atoms/AtomTypography";
 import AtomBox from "../../../../Atomic/atoms/AtomBox";
 import AtomButton from "../../../../Atomic/atoms/AtomButton";
 import Avatar from "@material-ui/core/Avatar";
-import AtomGrid from "../../../../Atomic/atoms/AtomGrid";
 import CardHeader from "@material-ui/core/CardHeader";
 
 const useStyles = makeStyles((theme) => ({
