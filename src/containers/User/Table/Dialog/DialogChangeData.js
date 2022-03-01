@@ -9,7 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AtomButton from "../../../../Atomic/atoms/AtomButton";
 import AtomBox from "../../../../Atomic/atoms/AtomBox";
-import { format } from "date-fns";
+import format from "date-fns/format";
 
 const useStyles = makeStyles((theme) => ({
   widthDialog: {
@@ -99,7 +99,7 @@ export default function FormDialog(props) {
     return (
       url.match(
         //eslint-disable-next-line
-        /(http[s]*:\/\/)([a-z\-_0-9\/.]+)\.([a-z.]{2,3})\/([a-z0-9\-_\/._~:?#\[\]@!$&'()*+,;=%]*)([a-z0-9]+\.)(jpg|jpeg|gif|png|tiff|bmp)/i
+        /(http[s]*:\/\/)[a-zA-Z0-9][a-zA-Z0-9-.]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}\/([a-z0-9\-_\/._~:?#\[\]@!$&'()*+,;=%]*)([a-z0-9]+\.)(jpg|jpeg|gif|png|tiff|bmp)$/i
       ) !== null
     );
   };
@@ -174,7 +174,7 @@ export default function FormDialog(props) {
                 required
                 fullWidth
                 error={Boolean(errAvatar)}
-                helperText={errAvatar ? "Không phải là đường dẩn hình ảnh" : ""}
+                helperText={errAvatar ? "Không phải là đường dẫn hình ảnh" : ""}
                 onChange={(event, data) => {
                   if (
                     event.target.value !== "" &&
@@ -235,7 +235,7 @@ export default function FormDialog(props) {
                 required
                 fullWidth
                 error={Boolean(errAvatar)}
-                helperText={errAvatar ? "Không phải là đường dẩn hình ảnh" : ""}
+                helperText={errAvatar ? "Không phải là đường dẫn hình ảnh" : ""}
                 onChange={(event, data) => {
                   if (
                     event.target.value !== "" &&
