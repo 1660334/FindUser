@@ -18,14 +18,14 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
   muiTextField: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1),
   },
 
   dialogtitle: {
     textAlign: "center",
   },
   datePicker: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1),
   },
   error: {
     color: "red",
