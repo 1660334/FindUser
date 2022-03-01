@@ -36,8 +36,8 @@ export default function ListCard(props) {
     <AtomBox>
       {filterArr.length > 0 ? (
         filterArr.map((user) => (
-          <AtomBox className={classes.root}>
-            <Card key={user.id}>
+          <AtomBox className={classes.root} key={user.id}>
+            <Card>
               <CardActionArea>
                 <CardHeader
                   avatar={
