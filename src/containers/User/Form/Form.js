@@ -13,8 +13,7 @@ import AtomButton from "../../../Atomic/atoms/AtomButton";
 import DialogEditUser from "../Table/Dialog/DialogChangeData";
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(1),
-    padding: theme.spacing(0),
+    padding: theme.spacing(1),
   },
   selectyear: {
     margin: theme.spacing(1),
