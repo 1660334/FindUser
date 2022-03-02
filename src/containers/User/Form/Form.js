@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core";
 import InputLabel from "@material-ui/core/InputLabel";
 import AtomTypography from "../../../Atomic/atoms/AtomTypography";
@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
   },
   title: {
-    paddingBottom: theme.spacing(2),
     fontWeight: "bold",
   },
   labelInput: {
@@ -49,6 +48,26 @@ export default function Form(props) {
   const [textSearch, setTextSearch] = useState("");
   const [openDialogChangeUser, setOpenDialogChangeUser] = useState(false);
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
+
+  const timer = useRef();
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
+
+  const handleButtonClick = () => {
+    if (!loading) {
+      setLoading(true);
+      timer.current = window.setTimeout(() => {
+        handleAddRowsModelChange();
+        setOpenDialogChangeUser(!openDialogChangeUser);
+        setLoading(false);
+      }, 2000);
+    }
+  };
   const handleClickAddUser = () => {
     setOpenDialogChangeUser(true);
   };
@@ -255,8 +274,9 @@ export default function Form(props) {
         <DialogEditUser
           openDialogChangeUser={openDialogChangeUser}
           setOpenDialogChangeUser={setOpenDialogChangeUser}
-          handleAddRowsModelChange={handleAddRowsModelChange}
+          handleButtonClick={handleButtonClick}
           newData={newData}
+          loading={loading}
           isCheckClick="true"
         />
       )}

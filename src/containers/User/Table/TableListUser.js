@@ -91,7 +91,9 @@ export default function TableListUser(props) {
   const handleEditRowsModelChange = (data) => {
     return arr.filter((item) => {
       if (item.id === data) {
-        arr[0] = dataEdit;
+        item.name = dataEdit.name;
+        item.avatar = dataEdit.avatar;
+        item.bornyear = dataEdit.bornyear;
         setFilterArr(arr);
       }
       return setFilterArr(arr);

@@ -10,22 +10,24 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import AtomButton from "../../../../Atomic/atoms/AtomButton";
 import AtomBox from "../../../../Atomic/atoms/AtomBox";
 import format from "date-fns/format";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
-  widthDialog: {
-    margin: "auto",
-    height: "100%",
-    padding: theme.spacing(3),
+  root: {
+    display: "flex",
+    alignItems: "center",
+    position: "relative",
   },
+
   muiTextField: {
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(3),
   },
 
   dialogtitle: {
     textAlign: "center",
   },
   datePicker: {
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(3),
   },
   error: {
     color: "red",
@@ -33,6 +35,15 @@ const useStyles = makeStyles((theme) => ({
 
   buttonstyle: {
     textTransform: "none",
+  },
+
+  buttonProgress: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    textTransform: "none",
+    marginTop: -12,
+    marginLeft: -12,
   },
 }));
 
@@ -42,7 +53,8 @@ export default function FormDialog(props) {
     setOpenDialogChangeUser,
     getDataEdit,
     handleEditRowsModelChange,
-    handleAddRowsModelChange,
+    loading,
+    handleButtonClick,
     dataEdit,
     newData,
     isCheckClick,
@@ -62,6 +74,7 @@ export default function FormDialog(props) {
   const [errAvatar, setErrAvatar] = useState(null);
   const [errDate, setErrDate] = useState(null);
   const [errName, setErrName] = useState(null);
+
   const handleDateChange = (data) => {
     handleDataEdit(data);
     console.log("date", data);
@@ -161,7 +174,7 @@ export default function FormDialog(props) {
         aria-labelledby="form-dialog-title"
       >
         {isCheckClick === "true" ? (
-          <AtomBox className={classes.widthDialog}>
+          <AtomBox p={3}>
             <DialogTitle id="form-dialog-title" className={classes.dialogtitle}>
               Thêm người dùng mới
             </DialogTitle>
@@ -192,7 +205,6 @@ export default function FormDialog(props) {
               <TextField
                 className={classes.muiTextField}
                 id="name"
-                type="text"
                 label="Họ và tên"
                 required
                 fullWidth
@@ -288,21 +300,30 @@ export default function FormDialog(props) {
 
         <DialogActions>
           {isFullData ? (
-            <AtomButton
-              className={classes.buttonstyle}
-              color="primary"
-              onClick={() => {
-                if (isCheckClick === "true") {
-                  //dùng hàm setTimeout để cài đặt thời gian hàm handleAddRowsModelChange và thời gian để thực thi khi ta click (tính bằng milisecons)
-                  //
-                  setTimeout(handleAddRowsModelChange, 0);
-                  // handleAddRowsModelChange();
-                } else handleEditRowsModelChange(getDataEdit.id);
-                setOpenDialogChangeUser(!openDialogChangeUser);
-              }}
-            >
-              Lưu
-            </AtomButton>
+            <AtomBox className={classes.root}>
+              <AtomButton
+                className={classes.buttonstyle}
+                color="primary"
+                disabled={loading}
+                onClick={() => {
+                  if (isCheckClick === "true") {
+                    //dùng hàm setTimeout để cài đặt thời gian hàm handleAddRowsModelChange và thời gian để thực thi khi ta click (tính bằng milisecons)
+                    handleButtonClick();
+                  } else {
+                    handleEditRowsModelChange(getDataEdit.id);
+                    setOpenDialogChangeUser(!openDialogChangeUser);
+                  }
+                }}
+              >
+                Lưu
+              </AtomButton>
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  className={classes.buttonProgress}
+                />
+              )}
+            </AtomBox>
           ) : (
             <AtomButton
               className={classes.buttonstyle}
